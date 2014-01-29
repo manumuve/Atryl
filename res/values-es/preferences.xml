@@ -1,0 +1,12 @@
+<?xml version="1.0" encoding="utf-8" ?>
+<resources>
+   <string name="preference_SharingOptions">Compartir contenido</string>
+   <string name="preference_IncludeAppNameTitle">Incluir nombre de la app</string>
+   <string name="preference_IncludeAppNameSummaryON">Se incluirá como referencia el nombre de la app cuando se comparte contenido con otras aplicaciones.</string>
+   <string name="preference_IncludeAppNameSummaryOFF">El nombre de la app no se incluirá cuando se comparte contenido con otras aplicaciones.</string>
+   
+   <string name="preference_StatisticsOptions">Estadísticas anónimas</string>
+   <string name="preference_AnonStatsTitle">Habilitar</string>
+   <string name="preference_AnonStatsSummaryON">Habilita el envío de estadísticas anónimas para ayudar al desarrollador a mejorar su trabajo.</string>
+   <string name="preference_AnonStatsSummaryOFF">El envío de estadísticas anónimas está deshabilitado.</string>
+</resources>

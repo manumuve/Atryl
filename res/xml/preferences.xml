@@ -1,0 +1,23 @@
+<?xml version="1.0" encoding="utf-8"?>
+<PreferenceScreen xmlns:android="http://schemas.android.com/apk/res/android" >
+
+    <PreferenceCategory android:title="@string/preference_SharingOptions" >
+        <CheckBoxPreference
+            android:defaultValue="true"
+            android:key="preference_IncludeAppName"
+            android:summaryOn="@string/preference_IncludeAppNameSummaryON"
+            android:summaryOff="@string/preference_IncludeAppNameSummaryOFF"
+            android:title="@string/preference_IncludeAppNameTitle" />
+    </PreferenceCategory>
+    <PreferenceCategory
+        android:icon="@drawable/ic_action_share"
+        android:title="@string/preference_StatisticsOptions" >
+        <CheckBoxPreference
+            android:defaultValue="true"
+            android:key="preference_SendAnonStats"
+            android:summaryOn="@string/preference_AnonStatsSummaryON"
+            android:summaryOff="@string/preference_AnonStatsSummaryOFF"
+            android:title="@string/preference_AnonStatsTitle" />
+    </PreferenceCategory>
+
+</PreferenceScreen>

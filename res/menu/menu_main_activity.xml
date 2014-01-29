@@ -1,0 +1,36 @@
+<menu xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:atryl="http://schemas.android.com/apk/res-auto" >
+
+    <item
+        android:id="@+id/action_refresh"
+        android:icon="@drawable/ic_action_refresh"
+        android:title="@string/action_refresh"
+        atryl:showAsAction="always" android:visible="false"/>
+    <item
+        android:id="@+id/action_addFeed"
+        android:icon="@drawable/ic_action_new"
+        android:title="@string/action_addFeed"
+        atryl:showAsAction="always"/>
+    <item
+        android:id="@+id/action_shareFeedItem"
+        android:icon="@drawable/ic_action_share"
+        android:title="@string/action_shareFeedItem"
+        atryl:actionProviderClass="android.support.v7.widget.ShareActionProvider"
+        atryl:showAsAction="always"/>
+    <item
+        android:id="@+id/action_viewOnWeb"
+        android:icon="@drawable/ic_action_web_site"
+        android:title="@string/action_viewOnWeb"
+        atryl:showAsAction="always"/>
+    <item
+        android:id="@+id/action_settings"
+        android:icon="@drawable/ic_action_settings"
+        android:title="@string/action_settings"
+        atryl:showAsAction="never"/>
+    <item
+        android:id="@+id/action_help"
+        android:icon="@drawable/ic_action_help"
+        android:title="@string/action_help"
+        atryl:showAsAction="never"/>
+
+</menu>

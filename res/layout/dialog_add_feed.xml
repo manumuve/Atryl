@@ -1,0 +1,65 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:layout_width="fill_parent"
+    android:layout_height="fill_parent"
+    android:orientation="vertical" >
+
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content" >
+
+        <EditText
+            android:id="@+id/editxDialogAddFeed_URL"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_weight="1"
+            android:ems="10"
+            android:hint="URL del feed"
+            android:inputType="textUri" />
+
+        <Button
+            android:id="@+id/btDialogAddFeed_SearchURL"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:background="@color/holo_blue_light"
+            android:text="@string/button_search"
+            android:textColor="@color/white" />
+    </LinearLayout>
+
+    <LinearLayout
+        android:id="@+id/lyDialogAddFeed_FeedDetails"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:orientation="vertical" >
+
+        <EditText
+            android:id="@+id/editxDialogAddFeed_FeedTitle"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:ems="10"
+            android:hint="@string/hint_feed_title" >
+
+            <requestFocus />
+        </EditText>
+
+        <EditText
+            android:id="@+id/editxDialogAddFeed_FeedDescription"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:ems="10"
+            android:hint="@string/hint_feed_description" />
+
+        <Spinner
+            android:id="@+id/spDialogAddFeed_Category"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content" />
+
+        <EditText
+            android:id="@+id/editxDialogAddFeed_NewCategory"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:ems="10"
+            android:hint="@string/hint_new_category" />
+    </LinearLayout>
+
+</LinearLayout>

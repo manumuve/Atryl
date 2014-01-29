@@ -1,0 +1,54 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+
+    <string name="app_name">Atryl</string>
+    
+    <string name="string_topStories">Historias destacadas</string>
+    <string name="string_topStoriesOfNow">Historias destacadas del momento</string>
+    
+    <string name="string_errorNotValidUrl">no parece una URL válida</string>
+    
+    <string name="action_addFeed">Añadir feed</string>
+    <string name="action_settings">Ajustes</string>
+    <string name="action_about">Acerca de..</string>
+    <string name="action_refresh">Actualizar</string>
+    <string name="action_shareFeedItem">Compartir</string>
+    <string name="action_viewOnWeb">Ver en web</string>
+    <string name="action_help">Ayuda</string>
+    
+    <string name="drawer_open">Abrir panel de navegación</string>
+    <string name="drawer_close">Cerrar panel de navegación</string>
+    
+    <string name="app_not_available">No existe ninguna aplicación para completar la acción.</string>
+    
+    <string name="share_app_reference">vía @AtrylReader</string>
+    
+    <string name="listview_no_data">¡No hay datos!</string>
+    
+    <string name="feed_url">URL del feed</string>
+    <string name="button_search">Buscar</string>
+    <string name="hint_feed_title">Título del feed</string>
+    <string name="hint_feed_description">Descripción del feed</string>
+    <string name="hint_new_category">Nueva categoría</string>
+    <string name="hint_category_name">Nombre de la categoría</string>
+    <string name="check_delete_feed">Borrar feed</string>
+    
+    <string name="dialog_add_feed">Añadir nuevo feed</string>
+    <string name="dialog_edit_feed">Editar feed</string>
+    <string name="dialog_edit_category">Editar categoría</string>
+    
+    <string name="button_accept">Aceptar</string>
+    <string name="button_cancel">Cancelar</string>
+    <string name="button_delete_feed">Borrar feed</string>
+    
+    <string name="toast_feed_loaded">Cargado</string>
+    <string name="toast_error_loading_feed">Error cargando feed</string>
+    
+    <string name="string_new_category">Nueva categoría</string>
+    
+    <string name="string_welcome">Welcome to Atryl!\nLine 2</string>
+    
+    <string name="string_help">Atryl es un lector de noticias de código abierto.\nPuedes suscribirte a una fuente RSS desplegando el panel lateral y pulsando en la opción Agregar feed en el menú de la barra superior.</string>
+   
+
+</resources>

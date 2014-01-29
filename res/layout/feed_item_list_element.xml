@@ -1,0 +1,31 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:layout_width="fill_parent"
+    android:layout_height="wrap_content"
+    android:background="@drawable/shape_rss_item"
+    android:gravity="center_vertical"
+    android:orientation="vertical"
+    android:paddingLeft="5dp"
+    android:paddingRight="5dp"
+    android:paddingTop="10dp"
+    android:paddingBottom="5dp" >
+
+            <TextView
+                android:id="@+id/txFeedItemListElementTitle"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:fontFamily="sans-serif-light"
+                android:text="@string/string_test_text"
+                android:textAppearance="?android:attr/textAppearanceMedium"
+                android:textSize="22dp" />
+
+            <TextView
+                android:id="@+id/txFeedItemListElementDescription"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:fontFamily="sans-serif"
+                android:text="@string/string_test_text"
+                android:textAppearance="?android:attr/textAppearanceSmall"
+                android:textColor="#A9A9A9" />
+
+        </LinearLayout>

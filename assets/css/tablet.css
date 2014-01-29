@@ -1,0 +1,144 @@
+/* android:fontFamily="sans-serif"           // roboto regular   */
+/* android:fontFamily="sans-serif-light"     // roboto light     */
+/* android:fontFamily="sans-serif-condensed" // roboto condensed */
+/* font-weight: */
+/* 100 */
+/* 200 */
+/* 300 */
+/* 400 normal */
+/* 500 */
+/* 600 */
+/* 700 bold */
+/* 800 */
+/* 900 */
+
+/* Remove styles */ 
+{ 
+    margin: 0; 
+    padding: 0; 
+    border: 0;
+    font: normal normal 100%/1.0;
+    font-size: 1.0em;
+	line-height: 1.0em;
+}
+
+body 
+    { 
+    font-family: sans-serif-light;
+    font-weight: 400;
+    background-color: #FBFBFB;     
+    text-align : justify;
+	width: 80%;
+	margin-left: auto;
+  	margin-right: auto;
+}
+ 
+h1 
+	{ 
+    font-size: 2.2em;
+    text-align: left;
+    } 
+
+h2 
+    { 
+    font-size: 2.0em;
+    text-align: left;
+} 
+
+h3 
+    { 
+    font-size: 1.8em;
+    text-align: left;
+} 
+
+h4 
+    { 
+    font-size: 1.6em;
+    text-align: left; 
+} 
+
+h5 
+    { 
+    font-size: 1.4em;
+    text-align: left; 
+} 
+
+p 
+    { 
+    font-size: 1.2em;     
+}
+
+
+.atryl-title
+	{
+	font-family: sans-serif;
+	font-weight: 400;
+	font-size: 2.4em;
+	text-align: left;
+}
+
+.atryl-author
+	{
+	font-family: sans-serif-light;
+	font-weight: 400;
+	font-size: 1.2em;
+	text-align: left;
+	color: #A9A9A9;
+}
+
+.atryl-pubdate
+	{
+	font-family: sans-serif;
+	font-weight: 100;
+	font-size: 0.8em;
+	text-align: left;
+	color: #A9A9A9;
+}
+
+img {
+	height:auto;
+	max-width: 100%;
+	margin-left: auto;
+  	margin-right: auto;
+  	margin-top: 0.5em;
+  	margin-bottom: 1em;
+	
+  	border: solid 1px #EFEFEF;
+  	-webkit-box-shadow: 1px 1px 5px #CCCCCC;
+  	box-shadow: 1px 1px 5px #CCCCCC;
+}
+
+.aligncenter {
+	height:auto;
+	width: 100%;
+  	display: block;
+  	margin-left: auto;
+  	margin-right: auto;
+  	margin-top: 2em;
+	margin-bottom: 3em;
+}
+
+.alignleft {
+  	float:left;
+  
+  	max-width: 40%;
+  
+  	margin-right: 3em;
+  	margin-top: 2em;
+	margin-bottom: 3em;
+}
+
+.alignright {
+  	float:right;
+  
+ 	max-width: 40%;
+  
+ 	margin-left: 2em;
+ 	margin-top: 3em;
+	margin-bottom: 3em;
+}
+
+.attachment-thumbnail {
+	max-width: 20%;
+	height:auto;
+}
