@@ -11,7 +11,7 @@ import java.util.Locale;
 import com.manumuve.atryl.data.DataSingleton;
 import com.manumuve.atryl.data.RssItem;
 
-public class RelevantHistoryMaker {
+public class TopHistoryMaker {
 
 	private static DataSingleton dataSingleton;
 	private ArrayList<RssItem> topStories;
@@ -48,7 +48,7 @@ public class RelevantHistoryMaker {
 	/** Máx horas para ser considerado item destacado */
 	private static final int MAX_MINUTES_AGE = 60*36;
 	
-	public RelevantHistoryMaker () {
+	public TopHistoryMaker () {
 		dataSingleton = DataSingleton.getInstance();
 		topStories = new ArrayList<RssItem>();
 		keyWords = new HashSet<ClassKeyWord>();

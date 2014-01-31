@@ -56,7 +56,7 @@ import com.manumuve.atryl.fragment.FragmentFeedItemList;
 import com.manumuve.atryl.fragment.FragmentHelp;
 import com.manumuve.atryl.fragment.FragmentLoadingScreen;
 import com.manumuve.atryl.util.MyConstants;
-import com.manumuve.atryl.util.RelevantHistoryMaker;
+import com.manumuve.atryl.util.TopHistoryMaker;
 import com.manumuve.atryl.util.Utils;
 
 
@@ -105,7 +105,7 @@ public class MainActivity extends ActionBarActivity implements XmlLoadInterface,
 	public static AlmacenStructInterface almacen;
 	
 	/* Clase constructora del listado de noticias destacadas */
-	private RelevantHistoryMaker relevantHistoryMaker = new RelevantHistoryMaker();
+	private TopHistoryMaker relevantHistoryMaker = new TopHistoryMaker();
 	
 	/* Botón noticias destacadas */
 	private Button btTopStories;
@@ -904,9 +904,6 @@ public class MainActivity extends ActionBarActivity implements XmlLoadInterface,
 		public boolean onGroupClick(ExpandableListView parent, View v,
 				int groupPosition, long id) {
 			
-			// establecer categoría actual
-			dataSingleton.nowCategory = groupPosition;
-
 			return false; // no se ha manejado el click (expande la categoría)
 		}
 		
