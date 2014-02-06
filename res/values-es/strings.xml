@@ -49,6 +49,8 @@
     <string name="string_welcome">Welcome to Atryl!\nLine 2</string>
     
     <string name="string_help">Atryl es un lector de noticias de código abierto.\nPuedes suscribirte a una fuente RSS desplegando el panel lateral y pulsando en la opción Agregar feed en el menú de la barra superior.</string>
+    
+    <string name="press_once_again_to_exit">Pulsa de nuevo para salir</string>
    
 
 </resources>

@@ -51,5 +51,7 @@
     <string name="string_help">Atryl is an open source feeds reader.\nYou can subscribe add a RSS feed displaying the left side panel and clicking on the Add feed option in the top menu bar.</string>
     
     <string name="string_test_text">test text</string>
+    
+    <string name="press_once_again_to_exit">Press once again to exit</string>
 
 </resources>

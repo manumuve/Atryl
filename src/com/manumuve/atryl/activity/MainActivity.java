@@ -382,6 +382,26 @@ public class MainActivity extends ActionBarActivity implements XmlLoadInterface,
     }
     
     
+    /**
+     * Implementa el doble clic de confirmación para salir de la aplicación.
+     * La duración de los toast en Android es la siguiente:
+     * private static final int LONG_DELAY = 3500; // 3.5 seconds
+     * private static final int SHORT_DELAY = 2000; // 2 seconds
+     */
+    private long mLastPress = 0;
+    @Override
+    public void onBackPressed() {
+        Toast onBackPressedToast = Toast.makeText(this, R.string.press_once_again_to_exit, Toast.LENGTH_SHORT);
+        long currentTime = System.currentTimeMillis();
+        if (currentTime - mLastPress > 2000) {
+            onBackPressedToast.show();
+            mLastPress = currentTime;
+        } else {
+            onBackPressedToast.cancel();  //Difference with previous answer. Prevent continuing showing toast after application exit 
+            super.onBackPressed();
+        }
+    }
+    
     
     
 	/* Menu ---------------------------------------------------------------- */
