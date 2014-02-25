@@ -1,11 +1,11 @@
-/**
- * TODO: La carga de feeds se hace secuencialmente
- * tarda mucho, hay que cambiarlo a un modelo de carga
- * simultanea: lanzar varias tareas asíncronas a la vez.
- * NOTA: AsyncTask por defecto actua secuencialmente. Dejar así de momento.
- * http://manishkpr.webheavens.com/android-navigation-drawer-example-using-fragments/
- */
-
+/*******************************************************************************
+ * Atryl: RSS news reader for Android Devices - v0.4 - 25/02/2014
+ * https://github.com/manumuve/Atryl
+ *
+ * Copyright (c) 2014 "Manumuve" Manuel E Muñoz <manumuve@gmail.com>
+ * Dual licensed under the MIT and GPL licenses.
+ *
+ ******************************************************************************/
 package com.manumuve.atryl.fragment;
 
 import android.app.Activity;
@@ -28,7 +28,12 @@ import com.manumuve.atryl.data.DataSingleton;
 import com.manumuve.atryl.util.MyConstants;
 import com.manumuve.atryl.util.Utils;
 
-
+/**
+ * Clase encargada de gestionar la porción de pantalla donde se muestra
+ * la pantalla de carga inicial de la aplicación.
+ * @author Manu
+ *
+ */
 public class FragmentLoadingScreen extends Fragment {
 	
 	private DataSingleton dataSingleton;
@@ -37,6 +42,9 @@ public class FragmentLoadingScreen extends Fragment {
 	
 	private ProgressBar progressBar;
 	
+	/**
+	 * Constructor estándar.
+	 */
 	public FragmentLoadingScreen() {
 		// Empty constructor required for fragment subclasses
 	}
@@ -59,6 +67,9 @@ public class FragmentLoadingScreen extends Fragment {
         setRetainInstance(true);
 	}
 
+	/**
+	 * Devuelve la vista que se va a utilizar. 
+	 */
 	@Override
 	public View onCreateView(LayoutInflater inflater, ViewGroup container, Bundle savedInstanceState) {
 		//Utils.MyLog('d', "FragmentFeedItemList onCreateView");
@@ -67,6 +78,11 @@ public class FragmentLoadingScreen extends Fragment {
 		
 	}
 	
+	/**
+	 * Enlaza los componentes de la vista con variables del método,
+	 * resetea las variables de estado de ejecución del singleton
+	 * y configura la barra de progreso para trabajar con porcentajes.
+	 */
 	@Override
 	public void onActivityCreated(Bundle state) {
 		super.onActivityCreated(state);
@@ -84,7 +100,7 @@ public class FragmentLoadingScreen extends Fragment {
 		progressBar = (ProgressBar) getView().findViewById(R.id.progressBar1);
 		progressBar.setMax(100); // trabajar con porcentajes
 		
-		/* Aviso si no hay conexión */ //TODO: pasar a main activity
+		/* Aviso si no hay conexión */
 		if (!Utils.checkConnectivity()) {
 			Utils.MyLog('d', "No existe conexión a Internet");
 			Toast.makeText(dataSingleton.context, "No existe conexión a Internet", Toast.LENGTH_LONG).show();
@@ -157,6 +173,12 @@ public class FragmentLoadingScreen extends Fragment {
 	
 	
 	/* Métodos propios ----------------------------------------------------- */
+	
+	/**
+	 * Actualiza la barra de progreso con el progreso actual.
+	 * @param progress	porcentaje cargado.
+	 * @param feedTitle	título del feed cargado.
+	 */
 	public void showProgress (int progress, String feedTitle) {
 		progressBar.setProgress(progress);
 		txLoading.setText(feedTitle + "...");

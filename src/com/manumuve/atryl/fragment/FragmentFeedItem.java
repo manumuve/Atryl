@@ -1,3 +1,11 @@
+/*******************************************************************************
+ * Atryl: RSS news reader for Android Devices - v0.4 - 25/02/2014
+ * https://github.com/manumuve/Atryl
+ *
+ * Copyright (c) 2014 "Manumuve" Manuel E Muñoz <manumuve@gmail.com>
+ * Dual licensed under the MIT and GPL licenses.
+ *
+ ******************************************************************************/
 package com.manumuve.atryl.fragment;
 
 import java.text.SimpleDateFormat;
@@ -23,10 +31,12 @@ import com.manumuve.atryl.data.RssItem;
 import com.manumuve.atryl.util.MyConstants;
 import com.manumuve.atryl.util.Utils;
 
-
-
-
-
+/**
+ * Clase encargada de gestionar la porción de pantalla donde se muestra
+ * una noticia.
+ * @author Manu
+ *
+ */
 public class FragmentFeedItem extends Fragment {
 
 	private WebView webView;
@@ -38,6 +48,9 @@ public class FragmentFeedItem extends Fragment {
 	private String styleSheet;
 
 
+	/**
+	 * Constructor estándar.
+	 */
 	public FragmentFeedItem() {
 		// Empty constructor required for fragment subclasses
 
@@ -59,6 +72,9 @@ public class FragmentFeedItem extends Fragment {
 		
 	}
 	
+	/**
+	 * Devuelve la vista que se va a utilizar. 
+	 */
 	@Override
 	public View onCreateView(LayoutInflater inflater, ViewGroup container,
 			Bundle savedInstanceState) {
@@ -68,6 +84,11 @@ public class FragmentFeedItem extends Fragment {
 
 	}
 
+	/**
+	 * Enlaza los componentes de la vista con variables del método
+	 * y realiza una llamada al método mostrarRssItem si hay una
+	 * noticia para mostrar.
+	 */
 	@Override
 	public void onActivityCreated(Bundle state) {
 		super.onActivityCreated(state);
@@ -160,19 +181,30 @@ public class FragmentFeedItem extends Fragment {
 
 	/* FRAGMENT IS DESTROYED */
 	
-	/* Métodos propios del fragment */
+	/** Métodos propios del fragment */
 	
+	/**
+	 * Carga una noticia.
+	 * @param item noticia que se carga.
+	 */
 	public void cargarRssItem(RssItem item) {
 		Utils.MyLog('d', "Cargando item");
 		rssItem = item;
 		
 	}
 	
+	/**
+	 * Muestra una noticia.
+	 * Se aplica una hoja de estilos en cascada dependiendo del tipo
+	 * de dispositivo (teléfono o tableta).
+	 * 
+	 * @return resultado de la operación.
+	 */
 	public Boolean mostrarRssItem () {
 		if (rssItem!=null) {
 			Utils.MyLog('d', "Mostrando item");
 			
-			//TODO: formatear contenido, sería parte de este codigo de abajo
+			//TODO: formatear contenido, en constante mejora
 			
 			String fullItem;
 			String content;
@@ -214,13 +246,19 @@ public class FragmentFeedItem extends Fragment {
 		return false;
 	}
 	
+	/**
+	 * Limpia la variable rssItem.
+	 */
 	public void limpiarRssItem () {
 		rssItem = null;
 	}
 	
+	/**
+	 * Vacía el contenido del WebView.
+	 * Método recomendado en documentación Android.
+	 * @see http://developer.android.com/reference/android/webkit/WebView.html#clearView()
+	 */
 	public void emptyItem () {
-		// Método recomendado en:
-		// http://developer.android.com/reference/android/webkit/WebView.html#clearView()
 		webView.loadUrl("about:blank");
 		limpiarRssItem();
 	}

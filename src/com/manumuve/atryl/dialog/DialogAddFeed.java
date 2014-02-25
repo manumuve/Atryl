@@ -1,3 +1,11 @@
+/*******************************************************************************
+ * Atryl: RSS news reader for Android Devices - v0.4 - 25/02/2014
+ * https://github.com/manumuve/Atryl
+ *
+ * Copyright (c) 2014 "Manumuve" Manuel E Muñoz <manumuve@gmail.com>
+ * Dual licensed under the MIT and GPL licenses.
+ *
+ ******************************************************************************/
 package com.manumuve.atryl.dialog;
 
 import java.net.URL;
@@ -26,14 +34,19 @@ import com.manumuve.atryl.data.DataSingleton;
 import com.manumuve.atryl.data.RssFeed;
 import com.manumuve.atryl.util.Utils;
 
-
+/** Clase encargada de la gestión del diálodo "Añadir Suscripción"
+ * 
+ * @author Manu
+ *
+ */
 public class DialogAddFeed extends DialogFragment implements FeedLoadInterface {
 
 	
-	/* -------------------------------------------------------
+	/** 
      * Comprobar que la clase que hace la llamada implementa
      * la interfaz necesaria para los eventos callback
-     * -------------------------------------------------------
+     *
+     * @see http://developer.android.com/intl/es/training/basics/fragments/communicating.html
      */
 	// Use this instance of the interface to deliver action events
 	MyDialogInterface mListener;
@@ -52,7 +65,6 @@ public class DialogAddFeed extends DialogFragment implements FeedLoadInterface {
 					+ " must implement NoticeDialogListener");
 		}
 	}
-    /* -------------------------------------------------------  */
 
 	private DataSingleton dataSingleton;
 	private EditText etxFeedURL;
@@ -68,32 +80,24 @@ public class DialogAddFeed extends DialogFragment implements FeedLoadInterface {
 	
 	private boolean _isLoaded;
 	
-	/* Variables gestión de suscripciones */
+	/** Variables de gestión de suscripciones */
 	private RssFeed newRssFeed = null;
 	private int newRssFeedCategory;
-
-    /**
-     * Create a new instance of DialogEditCategory, providing "cat"
-     * as an argument.
-     */
-//    public static DialogEditFeed newInstance(int category, int feed) {
-//    	DialogEditFeed f = new DialogEditFeed();
-//
-//        // Supply cat input as an argument.
-//        Bundle args = new Bundle();
-//        args.putInt("category", category);
-//        args.putInt("feed", feed);
-//        f.setArguments(args);
-//
-//        return f;
-//    }
     
+    /**
+     * Iniciar las variables necesarias.
+     */
     @Override
     public void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         dataSingleton = DataSingleton.getInstance();
     }
     
+    /**
+     * Método que crea el diálogo "Añadir Suscripción".
+     * 
+     * @return diálogo creado.
+     */
 	@Override
 	public Dialog onCreateDialog(Bundle savedInstanceState) {
 
@@ -169,13 +173,12 @@ public class DialogAddFeed extends DialogFragment implements FeedLoadInterface {
             }
             	
         });
-		
-		
 
 		return builder.create();
 	}
 	
-	/* Cargar feed desde la url indicada.
+	/**
+	 * Cargar feed desde la url indicada.
 	 * Los resultados se recogen en FeedLoadInterface.
 	 */
 	public void loadFeed (URL url) {
@@ -184,19 +187,32 @@ public class DialogAddFeed extends DialogFragment implements FeedLoadInterface {
 	}
 
 	
-	/* FeedLoadInterface --------------------------------------------------- */
+	/**
+	 * Método de interfaz FeedLoadInterface.
+	 * Inicio de la carga del feed.
+	 */
 	@Override
 	public void onFeedLoadStart(String msg) {
 		// TODO Auto-generated method stub
 		
 	}
 
+	/**
+	 * Método de interfaz FeedLoadInterface.
+	 * Progreso de la carga del feed.
+	 */
 	@Override
 	public void onFeedLoadProgress(String msg) {
 		// TODO Auto-generated method stub
 		
 	}
 
+	/**
+	 * Método de interfaz FeedLoadInterface.
+	 * Carga del feed completada.
+	 * Actualiza la vista del diálogo con los datos del nuevo feed
+	 * y solicita seleccionar una categoría al usuario.
+	 */
 	@Override
 	public void onFeedLoadComplete(RssFeed rssFeed) {
 		if (rssFeed == null) {
@@ -247,7 +263,7 @@ public class DialogAddFeed extends DialogFragment implements FeedLoadInterface {
 	         
 	                @Override
 					public void onNothingSelected(AdapterView<?> parent) {
-	                   //TODO:
+	                   // Nada aquí.
 	                }
 	        });
 			
@@ -255,24 +271,30 @@ public class DialogAddFeed extends DialogFragment implements FeedLoadInterface {
 		}
 		
 	}
-	/* --------------------------------------------------------------------- */
-	
-	
-	
-	/* Gestión de suscripciones -------------------------------------------- */
 
+	/**
+	 * Devuelve el feed obtenido desde la url que proporcionó el usuario.
+	 * @return nuevo feed obtenido.
+	 */
 	public RssFeed getNewRssFeed() {
 		return newRssFeed;
 	}
 	
+	/**
+	 * Devuelve la nueva categoría introducida por el usuario.
+	 * @return nombre de nueva categoría.
+	 */
 	public String getNewRssCategoryName () {
 		return etxNewCategory.getText().toString();
 	}
 	
+	/**
+	 * Devuelve el número de categoría donde se agregará el nuevo feed.
+	 * @return número de categoría.
+	 */
 	public int getNewRssFeedCategory () {
 		return newRssFeedCategory;
 	}
-	/* --------------------------------------------------------------------- */
 
 	
 }

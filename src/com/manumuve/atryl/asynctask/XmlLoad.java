@@ -1,3 +1,11 @@
+/*******************************************************************************
+ * Atryl: RSS news reader for Android Devices - v0.4 - 25/02/2014
+ * https://github.com/manumuve/Atryl
+ *
+ * Copyright (c) 2014 "Manumuve" Manuel E Muñoz <manumuve@gmail.com>
+ * Dual licensed under the MIT and GPL licenses.
+ *
+ ******************************************************************************/
 package com.manumuve.atryl.asynctask;
 
 import java.io.IOException;
@@ -34,8 +42,12 @@ public class XmlLoad extends AsyncTask<Void, Void, Void> /* Params, Progress, Re
 	private int category, feed;
 	private Boolean _isLoaded;
 
-	/* Constructor público que toma los argumentos con los que trabajar
-	 * Llamada desde Activity
+	/**
+	 * Constructor público que toma los argumentos con los que trabajar.
+	 * Llamada desde Activity.
+	 * @param act		activity que llama.
+	 * @param category	categoría del feed.
+	 * @param feed		índice del feed.
 	 */
 	public XmlLoad (Activity act, int category, int feed) {
 		this.category = category;
@@ -46,8 +58,12 @@ public class XmlLoad extends AsyncTask<Void, Void, Void> /* Params, Progress, Re
 		oldRssFeed = dataSingleton.categories.get(category).getFeed(feed);
 	}
 	
-	/* Constructor público que toma los argumentos con los que trabajar
-	 * Llamada desde Fragment
+	/**
+	 * Constructor público que toma los argumentos con los que trabajar.
+	 * Llamada desde Fragment.
+	 * @param act		fragment que llama.
+	 * @param category	categoría del feed.
+	 * @param feed		índice del feed.
 	 */
 	public XmlLoad (Fragment frg, int category, int feed) {
 		this.category = category;
@@ -57,11 +73,18 @@ public class XmlLoad extends AsyncTask<Void, Void, Void> /* Params, Progress, Re
 		rssFeed = new RssFeed();
 	}
 	
+	/**
+	 * Notifica el inicio de la operación.
+	 */
 	@Override
 	protected void onPreExecute() {
 		callback.onXmlLoadStart(category, feed, MyConstants.NO_ERROR);
     }
 
+	/**
+	 * Tarea asíncrona en hilo aparte.
+	 * Se carga el contenido del feed desde Internet.
+	 */
 	@Override
 	protected Void doInBackground(Void... params) {
 
@@ -96,7 +119,10 @@ public class XmlLoad extends AsyncTask<Void, Void, Void> /* Params, Progress, Re
 		return null;
 
 	}
-	
+
+	/**
+	 * Notifica el progreso de la operación.
+	 */
 	@Override
 	protected void onProgressUpdate (Void...voids) {
         if (_isLoaded == true) {
@@ -107,6 +133,10 @@ public class XmlLoad extends AsyncTask<Void, Void, Void> /* Params, Progress, Re
         }
     }
 
+	/**
+	 * Fin de tarea asíncrona.
+	 * Notifica el final de la operación y devuelve el feed obtenido.
+	 */
 	@Override
 	protected void onPostExecute (Void result) {
 		if (_isLoaded == true) {

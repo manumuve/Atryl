@@ -1,9 +1,11 @@
-/*	Atryl: smart feed reader for Android devices
-    Copyright (C) 2013 @manumuve
-    
-    This file is part of Atryl.
-*/
-
+/*******************************************************************************
+ * Atryl: RSS news reader for Android Devices - v0.4 - 25/02/2014
+ * https://github.com/manumuve/Atryl
+ *
+ * Copyright (c) 2014 "Manumuve" Manuel E Muñoz <manumuve@gmail.com>
+ * Dual licensed under the MIT and GPL licenses.
+ *
+ ******************************************************************************/
 package com.manumuve.atryl.activity;
 
 import android.content.Intent;
@@ -63,12 +65,11 @@ import com.manumuve.atryl.util.Utils;
 /** Actividad principal de la aplicación
 * Construye la interfaz de usuario y se encarga de gestionarla.
 * @author Manumuve
-* @version 0.1
+* @version 0.4
 */
 public class MainActivity extends ActionBarActivity implements XmlLoadInterface, FragmentFeedItemList.OnFeedItemListSelectedListener, MyDialogInterface {
 	
 	
-	/** Variables */
 	/* Actionbar asociada a Navigation Drawer */
 	private ActionBarDrawerToggle mDrawerToggle;
 	
@@ -122,11 +123,10 @@ public class MainActivity extends ActionBarActivity implements XmlLoadInterface,
 	
 	
 	/** onCreate
-	 * Called when the activity is starting. This is where most initialization
-	 * should go: calling setContentView(int) to inflate the activity's UI,
-	 * using findViewById(int) to programmatically interact with widgets in the
-	 * UI, calling managedQuery(android.net.Uri, String[], String, String[],
-	 * String) to retrieve cursors for data being displayed, etc.
+	 * Invocada cuando la actividad se está iniciando. Contiene la
+	 * mayoría de las inicializaciones encargadas de construir la interfaz
+	 * de usuario.
+	 * Es el punto de entrada de la aplicación.
 	 */
 	@Override
 	public void onCreate(Bundle savedInstanceState) {
@@ -310,6 +310,9 @@ public class MainActivity extends ActionBarActivity implements XmlLoadInterface,
 		}
 	}
 
+	/**
+	 * Método invocado cada vez que se inicia la actividad.
+	 */
 	@Override
     protected void onStart() {
         super.onStart();
@@ -405,6 +408,9 @@ public class MainActivity extends ActionBarActivity implements XmlLoadInterface,
     
     
 	/* Menu ---------------------------------------------------------------- */
+    /**
+     * Construye el menú de la aplicación.
+     */
 	@Override
 	public boolean onCreateOptionsMenu(Menu menu) {
 		MenuInflater inflater = getMenuInflater();
@@ -428,9 +434,11 @@ public class MainActivity extends ActionBarActivity implements XmlLoadInterface,
 	}
 	
 	/** Defines a default share intent to initialize the action provider.
-	  * However, as soon as the actual content to be used in the intent
-	  * is known or changes, you must update the share intent by again calling
-	  * mShareActionProvider.setShareIntent()
+	  * Define un share intent por defecto para inicializar el action provider.
+	  * Los datos con los que se carga el intent, son los que la
+	  * aplicación compartirá con otras aplicaciones.
+	  * 
+	  * @return el intent con los datos que se comparten.
 	  */
 	private Intent getShareIntent() {
 
@@ -461,17 +469,20 @@ public class MainActivity extends ActionBarActivity implements XmlLoadInterface,
 		// Share app's name, if enabled in preferences
 		SharedPreferences sharedPref = PreferenceManager.getDefaultSharedPreferences(this);
 		intent.putExtra(Intent.EXTRA_TEXT,
-				rssItem.getTitle()
+				"\""
+				+ rssItem.getTitle()
 				+ ": "
 				+ rssItem.getLink()
 				+ (sharedPref.getBoolean("preference_IncludeAppName", true) ?
 						(" " + getResources().getString(R.string.share_app_reference)) : "")
-				);
+				+ "\"");
 
 		return intent;
 	}
 
-	/* Called whenever we call invalidateOptionsMenu() */
+	/**
+	 * Método invocado con cada llamada a invalidateOptionsMenu().
+	 */
 	@Override
 	public boolean onPrepareOptionsMenu(Menu menu) {
 		menuItemShareItem = menu.findItem(R.id.action_shareFeedItem);
@@ -578,6 +589,11 @@ public class MainActivity extends ActionBarActivity implements XmlLoadInterface,
 		return super.onPrepareOptionsMenu(menu);
 	}
 	
+	/**
+	 * Método incovado cada vez que se selecciona una opción del menú.
+	 * 
+	 * @return	true si se ha procesado la selección, false si no.
+	 */
 	@Override
 	public boolean onOptionsItemSelected(MenuItem item) {
 		// The action bar home/up action should open or close the drawer.
@@ -639,7 +655,9 @@ public class MainActivity extends ActionBarActivity implements XmlLoadInterface,
 	
 	
 	
-
+	/**
+	 * Establece el título de la barra de acción.
+	 */
 	@Override
 	public void setTitle(CharSequence title) {
 		mTitle = title;
@@ -650,7 +668,6 @@ public class MainActivity extends ActionBarActivity implements XmlLoadInterface,
 	 * When using the ActionBarDrawerToggle, you must call it during
 	 * onPostCreate() and onConfigurationChanged()...
 	 */
-
 	@Override
 	protected void onPostCreate(Bundle savedInstanceState) {
 		super.onPostCreate(savedInstanceState);
@@ -658,6 +675,9 @@ public class MainActivity extends ActionBarActivity implements XmlLoadInterface,
 		mDrawerToggle.syncState();
 	}
 
+	/**
+	 * Método invocado con cada cambio de orientación de la pantalla.
+	 */
 	@Override
 	public void onConfigurationChanged(Configuration newConfig) {
 		super.onConfigurationChanged(newConfig);
@@ -671,11 +691,22 @@ public class MainActivity extends ActionBarActivity implements XmlLoadInterface,
 	
 	
 	/* ------------- XmlLoadInterface -------------------------------------- */
+	
+	/**
+	 * Implementación de la interfaz XmlLoadInterface.
+	 */
+	
+	/**
+	 * Inicio de la operación.
+	 */
 	@Override
 	public void onXmlLoadStart(int category, int feed, int error) {
 		
 	}
 	
+	/**
+	 * Progreso de la operación.
+	 */
 	@Override
 	public void onXmlLoadProgress (int category, int feed, int error) {
 
@@ -707,6 +738,13 @@ public class MainActivity extends ActionBarActivity implements XmlLoadInterface,
 
 	}
 	
+	/**
+	 * Operación completa.
+	 * Este es el método de mayor importancia.
+	 * Se encarga de actualizar las noticias del feed que se ha
+	 * cargado y actualizar la interfaz de usuario con los
+	 * nuevos datos.
+	 */
 	@Override
 	public void onXmlLoadComplete(int category, int feed, int error)
 	{
@@ -832,6 +870,11 @@ public class MainActivity extends ActionBarActivity implements XmlLoadInterface,
 	
 	
 	/* The click listener for Add Feed button in the navigation drawer ----- */
+	/**
+	 * Click listerner para el botón de noticias destacadas.
+	 * @author Manu
+	 *
+	 */
 	private class BtRelevantOnClickListener implements View.OnClickListener {
 
 		@Override
@@ -882,11 +925,19 @@ public class MainActivity extends ActionBarActivity implements XmlLoadInterface,
 	
 	
     /* The click listener for ListView in the navigation drawer ------------ */
+	/** Click listener para la lista de categorías y feeds del 
+	 * cajón de navegación (Navigation Drawer).
+	 * @author Manu
+	 *
+	 */
     private class DrawerItemClickListener
     	implements 	ExpandableListView.OnGroupClickListener,
     				ExpandableListView.OnChildClickListener,
     				AdapterView.OnItemLongClickListener {
 
+    	/**
+    	 * Click en un elemento hijo.
+    	 */
 		@Override
 		public boolean onChildClick(ExpandableListView parent, View v,
 				int groupPosition, int childPosition, long id) {
@@ -920,6 +971,9 @@ public class MainActivity extends ActionBarActivity implements XmlLoadInterface,
 			return true;
 		}
 
+		/**
+    	 * Click en un elemento padre.
+    	 */
 		@Override
 		public boolean onGroupClick(ExpandableListView parent, View v,
 				int groupPosition, long id) {
@@ -929,6 +983,10 @@ public class MainActivity extends ActionBarActivity implements XmlLoadInterface,
 		
 		
 		/** Editar suscripciones ya existentes */
+		/**
+		 * Click largo en cualquier elemento.
+		 * Lanza los diálogos de edición.
+		 */
         @Override
         public boolean onItemLongClick(AdapterView<?> parent, View view, int position, long id) {
         	int childPosition, groupPosition;
@@ -968,7 +1026,10 @@ public class MainActivity extends ActionBarActivity implements XmlLoadInterface,
 
     /* Gestión de diálogos ------------------------------------------------- */
     
-    /* Mostrar diálogo "Editar categoría" */
+    /**
+     * Mostrar diálogo "Editar categoría".
+     * @param category	categoría a editar.
+     */
     public void onCategoryEdit (int category) {
 
     	// Create an instance of the dialog fragment and show it
@@ -978,7 +1039,11 @@ public class MainActivity extends ActionBarActivity implements XmlLoadInterface,
     }
     
     
-    /* Mostrar diálogo "Editar Feed" */
+    /**
+     * Mostrar diálogo "Editar Feed".
+     * @param category	categoría del feed a editar.
+     * @param feed		feed a editar.
+     */
     public void onFeedEdit (int category, int feed) {
 
     	// Create an instance of the dialog fragment and show it
@@ -988,7 +1053,9 @@ public class MainActivity extends ActionBarActivity implements XmlLoadInterface,
     }
     
     
-    /* Mostrar diálogo "Añadir feed" */
+    /**
+     * Mostrar diálogo "Añadir feed".
+     */
     public void onAddFeed () {
     	
     	// Create an instance of the dialog fragment and show it
@@ -996,11 +1063,17 @@ public class MainActivity extends ActionBarActivity implements XmlLoadInterface,
         dialog.show(getSupportFragmentManager(), "DialogAddFeed");
         
     }
-    
 
-    /* The dialog fragment receives a reference to this Activity through the
-     * Fragment.onAttach() callback, which it uses to call the following methods
-     * defined by the NoticeDialogFragment.NoticeDialogListener interface
+    
+    /**
+   	 * Implementación de la interfaz XmlLoadInterface.
+   	 */
+    
+    /**
+     * Click en botón positivo (Aceptar).
+     * Realiza la acción correspondiente al botón "Aceptar" del
+     * diálogo que hace la llamada.
+     * @param dialog	el diálogo desde el que se recibe la llamada.
      */
     @Override
     public void onDialogPositiveClick(DialogFragment dialog) {
@@ -1054,12 +1127,24 @@ public class MainActivity extends ActionBarActivity implements XmlLoadInterface,
     	}
     }
     
+    /**
+     * Click en botón negativo (Cancelar).
+     * Realiza la acción correspondiente al botón "Cancelar" del
+     * diálogo que hace la llamada.
+     * @param dialog	el diálogo desde el que se recibe la llamada.
+     */
     @Override
     public void onDialogNegativeClick(DialogFragment dialog) {
         // User touched the dialog's negative button
 
     }
-    
+
+    /**
+     * Click en botón neutral (tercer botón).
+     * Realiza la acción correspondiente al botón neutral del
+     * diálogo que hace la llamada.
+     * @param dialog	el diálogo desde el que se recibe la llamada.
+     */
     @Override
     public void onDialogNeutralClick (DialogFragment dialog) {
     	// User touched the dialog's neutral button
@@ -1080,8 +1165,8 @@ public class MainActivity extends ActionBarActivity implements XmlLoadInterface,
     
 	/* Comunicacion FragmentFeedItemList ----------------------------------- */
         
-    /* Se recibe evento Item Click de la lista de noticias
-     * (non-Javadoc)
+    /** Se recibe evento Item Click de la lista de noticias
+     * 
      * @see com.manumuve.atryl.fragment.FragmentFeedItemList.OnFeedItemListSelectedListener#onFeedItemListSelected(com.manumuve.atryl.RssItem)
      */
 	@Override
@@ -1097,7 +1182,11 @@ public class MainActivity extends ActionBarActivity implements XmlLoadInterface,
 	
 	/* Gestión de suscripciones -------------------------------------------- */
 	
-	/* Añadir feed */
+	/**
+	 * Añadir feed.
+	 * @param dialog	dialog con los datos del feed a agregar.
+	 * @return
+	 */
 	public int addNewFeed (DialogAddFeed dialog) {
 
 		String newRssCategoryName;
@@ -1163,7 +1252,11 @@ public class MainActivity extends ActionBarActivity implements XmlLoadInterface,
 		return 0; // ejecución sin error
 	}
 	
-	/* Borrar feed */
+	/**
+	 * Borrar feed
+	 * @param dialog	dialog con los datos del feed a borrar.
+	 * @return
+	 */
 	public int deleteFeed (DialogEditFeed dialog) {
 		
 		if (dialog.getDeleteFeed() == false) {
@@ -1230,7 +1323,9 @@ public class MainActivity extends ActionBarActivity implements XmlLoadInterface,
 	}
 	
 	
-	/* Cargar feeds desde Internet */
+	/**
+	 * Refrescar contenido de todas las suscripciones del uduario.
+	 */
 	public void refreshFeeds () {
 		
 		// Bloquear cambios en la orientación de la pantalla
@@ -1263,7 +1358,11 @@ public class MainActivity extends ActionBarActivity implements XmlLoadInterface,
 	}
 	
 	
-	/* Cargar un único feed desde Internet */
+	/**
+	 * Refrescar contenido de una suscripción determinada.
+	 * @param category	categoría del feed a refrescar.
+	 * @param feed		índice del feed a refrescar.
+	 */
 	public void refreshFeed (int category, int feed) {
 		
 		// Bloquear cambios en la orientación de la pantalla
@@ -1293,7 +1392,11 @@ public class MainActivity extends ActionBarActivity implements XmlLoadInterface,
 	
 	/* Métodos propios de la clase ----------------------------------------- */
 	
-	/* Decidir método de persistencia del panel */
+	/**
+	 *  Decidir método de persistencia del panel.
+	 * @param metodo	método a utilizar.
+	 * @return
+	 */
 	public int metodoAlmacen (int metodo) {
 
 		switch (metodo) {
@@ -1307,7 +1410,10 @@ public class MainActivity extends ActionBarActivity implements XmlLoadInterface,
 
 	}
 	
-	/* Mostrar el item seleccionado */
+	/**
+	 * Mostrar una noticia.
+	 * @param rssItem	noticia a mostrar.
+	 */
 	public void mostrarItem (RssItem rssItem) {
 		
 		fragmentFeedItem = fragmentManager.findFragmentByTag("fragmentFeedItem");

@@ -1,3 +1,11 @@
+/*******************************************************************************
+ * Atryl: RSS news reader for Android Devices - v0.4 - 25/02/2014
+ * https://github.com/manumuve/Atryl
+ *
+ * Copyright (c) 2014 "Manumuve" Manuel E Muñoz <manumuve@gmail.com>
+ * Dual licensed under the MIT and GPL licenses.
+ *
+ ******************************************************************************/
 package com.manumuve.atryl.data;
 
 import java.io.FileNotFoundException;
@@ -21,19 +29,32 @@ import android.util.Xml;
 
 import com.manumuve.atryl.util.Utils;
 
+/**
+ * Clase que guarda la estructura de categorías y suscripciones del
+ * usuario en un fichero XML.
+ * Implementa la interfaz AlmacenStructInterface.
+ * @author Manu
+ *
+ */
 public class AlmacenStructXML_SAX implements AlmacenStructInterface {
 	private static String FICHERO = "listacategorias.xml"; // fichero donde se guarda el panel
 	public ArrayList<RssCategory> categories; // lista de categorias
 	private Context context;
 	private boolean _isLoaded;
 
-	// Constructor
+	/**
+	 *  Constructor
+	 * @param context
+	 */
 	public AlmacenStructXML_SAX(Context context) {
 		this.context = context;
 		categories = new ArrayList<RssCategory>();
 		_isLoaded = false;
 	}
 
+	/**
+	 * Obtener listado de categorías con sus feeds.
+	 */
 	@Override
 	public ArrayList<RssCategory> getFeedsStruct() {
 		
@@ -50,6 +71,9 @@ public class AlmacenStructXML_SAX implements AlmacenStructInterface {
 		return categories;
 	}
 
+	/**
+	 * Establecer listado de categorías con sus feeds.
+	 */
 	@Override
 	public void setFeedsStruct(ArrayList<RssCategory> categories) {
 		this.categories = categories;
@@ -60,6 +84,11 @@ public class AlmacenStructXML_SAX implements AlmacenStructInterface {
 		}
 	}
 
+	/**
+	 * Leer datos de fichero XML.
+	 * @param inputStream	fichero XML que se lee.
+	 * @throws Exception
+	 */
 	public void readXML(InputStream inputStream) throws Exception {
 		SAXParserFactory factory = SAXParserFactory.newInstance();
 		SAXParser parser = factory.newSAXParser();
@@ -70,6 +99,10 @@ public class AlmacenStructXML_SAX implements AlmacenStructInterface {
 		_isLoaded = true;
 	}
 
+	/**
+	 * Almacenar datos en fichero XML.
+	 * @param outputStream	fichero donde se escribe.
+	 */
 	public void writeXML(OutputStream outputStream) {
 		int i, j; // category counter
 		XmlSerializer serializer = Xml.newSerializer();
@@ -102,6 +135,12 @@ public class AlmacenStructXML_SAX implements AlmacenStructInterface {
 		}
 	}
 
+	/**
+	 * Clase manejadora del fichero xml donde se almacena
+	 * la estructura de categorías con sus feeds.
+	 * @author Manu
+	 *
+	 */
 	class HandlerXML extends DefaultHandler {
 		private String chars;
 		private RssCategory category;

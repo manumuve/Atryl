@@ -1,3 +1,11 @@
+/*******************************************************************************
+ * Atryl: RSS news reader for Android Devices - v0.4 - 25/02/2014
+ * https://github.com/manumuve/Atryl
+ *
+ * Copyright (c) 2014 "Manumuve" Manuel E Muñoz <manumuve@gmail.com>
+ * Dual licensed under the MIT and GPL licenses.
+ *
+ ******************************************************************************/
 package com.manumuve.atryl.fragment;
 
 import android.content.SharedPreferences;
@@ -10,9 +18,19 @@ import com.google.analytics.tracking.android.Fields;
 import com.google.analytics.tracking.android.MapBuilder;
 import com.manumuve.atryl.R;
 
-
+/**
+ * Clase encargada de gestionar la porción de pantalla donde se muestra
+ * la configuración del programa.
+ * @author Manu
+ *
+ */
 public class FragmentSettings extends PreferenceFragment {
-    @Override
+    
+	/**
+	 * Lee las preferencias desde un fichero xml
+	 * y las muestra en pantalla.
+	 */
+	@Override
     public void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
 

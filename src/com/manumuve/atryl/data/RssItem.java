@@ -1,3 +1,11 @@
+/*******************************************************************************
+ * Atryl: RSS news reader for Android Devices - v0.4 - 25/02/2014
+ * https://github.com/manumuve/Atryl
+ *
+ * Copyright (c) 2014 "Manumuve" Manuel E Muñoz <manumuve@gmail.com>
+ * Dual licensed under the MIT and GPL licenses.
+ *
+ ******************************************************************************/
 package com.manumuve.atryl.data;
 
 import java.text.DateFormat;
@@ -14,6 +22,14 @@ import android.text.Html;
 
 import com.manumuve.atryl.util.Utils;
 
+/**
+ * Esta clase representa cada una de las noticias contenidas en una suscripción.
+ * Contiene los atributos obligatorios: title, link y description, además de
+ * una serie de atributos opcionales que son procesados en los métodos de la
+ * clase.
+ * @author Manu
+ *
+ */
 public class RssItem implements Parcelable {
 	
 	/** RSS 2.0.11 Specification
@@ -63,13 +79,22 @@ public class RssItem implements Parcelable {
 		}
 	};
 	
+	/**
+	 * Constructor estándar.
+	 */
 	public RssItem () {
 		
 	}
 	
+	/**
+	 * Constructor serializado.
+	 * Construye un RssItem recibiendo los datos
+	 * serializados en un objeto de la clase Parcel.
+	 * @param parcel	Parcel que contiene los datos del feed.
+	 */
 	public RssItem (Parcel parcel) {
 		
-		/* Alternativa:
+		/** Alternativa:
 		 * (Respetar el orden usado en el método writeToParcel)
 		 * item = parcel.readString();
 		 * ArrayList = parcel.createTypedArrayList(RssItem.CREATOR);
@@ -82,10 +107,13 @@ public class RssItem implements Parcelable {
 		setLink (data.getString("link"));
 		stringPubDate = data.getString("pubDate");
 		contentEncoded = data.getString("content");
-//		feed = data.getParcelable("feed");
+		//feed = data.getParcelable("feed");
 		
 	}
 	
+	/**
+	 * Escribe los datos de un RssItem en un objeto de clase Parcel.
+	 */
 	@Override
 	public void writeToParcel(Parcel dest, int flags) {
 
@@ -95,7 +123,7 @@ public class RssItem implements Parcelable {
 		data.putSerializable("pubDate", stringPubDate);
 		data.putString("description", description);
 		data.putString("content", contentEncoded);
-//		data.putParcelable("feed", feed);
+		//data.putParcelable("feed", feed);
 		
 		dest.writeBundle(data);
 		
@@ -106,39 +134,69 @@ public class RssItem implements Parcelable {
 		return 0;
 	}
 
+	/**
+	 * Obtener título.
+	 * @return	título del item.
+	 */
 	public String getTitle() {
 		return title;
 	}
 
+	/**
+	 * Establecer título.
+	 * @param title	título del item.
+	 */
 	public void setTitle(String title) {
 		this.title = Html.fromHtml(title).toString();
 	}
 	
+	/**
+	 * Obtener descripción.
+	 * @return	descripción del item.
+	 */
 	public String getDescription() {
 		return description;
 	}
 
+	/**
+	 * Establecer descripción.
+	 * Establece la descripción del item. Se ha intentado dar formato a la descripción,
+	 * en este método (ver código comentado) pero resulta un proceso muy pesado en
+	 * dispositivos móviles.
+	 * La descripción se guarda tal y como se recibe, y el formato se aplica solo
+	 * en el momento de mostrar el item.
+	 * @see FragmentFeedItem.java
+	 * @param description	descripción del item.
+	 */
 	public void setDescription(String description) {
-//      String html = this.items.get(position).getDescription();
-//      
-//    html = html.replaceAll("<(.*?)\\>"," ");//Removes all items in brackets
-//    html = html.replaceAll("<(.*?)\\\n"," ");//Must be undeneath
-//    html = html.replaceFirst("(.*?)\\>", " ");//Removes any connected item to the last bracket
-//    html = html.replaceAll("&nbsp;"," ");
-//    html = html.replaceAll("&amp;"," ");
-//      
-//    o
-//    
-//    myHtmlString.replaceAll("s/<(.*?)>//g","");
-      
-//      if (this.items.get(position).getDescription().length() > 0) {
-//          txDescription.setText(this.items.get(position).getDescription()
-//          		.substring(0, 24)
-//          		+ "...");
-//      } 
+		/*
+		String html = this.items.get(position).getDescription();
+
+		html = html.replaceAll("<(.*?)\\>"," ");//Removes all items in brackets
+		html = html.replaceAll("<(.*?)\\\n"," ");//Must be undeneath
+		html = html.replaceFirst("(.*?)\\>", " ");//Removes any connected item to the last bracket
+		html = html.replaceAll("&nbsp;"," ");
+		html = html.replaceAll("&amp;"," ");
+
+		o
+
+		myHtmlString.replaceAll("s/<(.*?)>//g","");
+
+		if (this.items.get(position).getDescription().length() > 0) {
+			txDescription.setText(this.items.get(position).getDescription()
+					.substring(0, 24)
+					+ "...");
+		}
+		*/ 
 		this.description = description;
 	}
 	
+	/**
+	 * Obtener enlace del item.
+	 * Si existe guid y es una URL, se devuelve guid,
+	 * si no se devuelve link.
+	 * @return	enlace del item.
+	 */
 	public String getLink() {
 		// Si guid es URL válida, devolver guid
 		if (Utils.stringToURL(guid) != null) {
@@ -148,6 +206,12 @@ public class RssItem implements Parcelable {
 		return link;
 	}
 
+	/**
+	 * Establecer enlace.
+	 * Se formatea el parámetro link antes de añadirlo como enlace
+	 * del item.
+	 * @param link	enlace del item.
+	 */
 	public void setLink(String link) {
 		// Forzar añadido de http al inicio
 		if (!link.startsWith("http://") && !link.startsWith("https://")){
@@ -157,22 +221,48 @@ public class RssItem implements Parcelable {
 		}
 	}
 
+	/**
+	 * Establecer guid.
+	 * @param guid	guid del item.
+	 */
 	public void setGuid (String guid) {
 		this.guid = guid;
 	}
 	
+	/**
+	 * Obtener guid.
+	 * @return	guid del item.
+	 */
 	public String getGuid () {
 		return guid;
 	}
 	
+	/**
+	 * Obtener fecha de publicación del item.
+	 * @return	fecha de publicación del item.
+	 */
 	public String getPubDate() {
 		return stringPubDate;
 	}
 	
+	/**
+	 * Obtener fecha de publicación del item,
+	 * como objeto Date.
+	 * @return	fecha de pulicación del item.
+	 */
 	public Date getDatePubDate() {
 		return datePubDate;
 	}
 	
+	/**
+	 * Establecer fecha de publicación del item.
+	 * Se establece la fecha de publicación del item y
+	 * una cadena de caracteres this.stringPubdate
+	 * que mostrará la hora de publicación si el item se ha publicado
+	 * hoy, "AYER" si se publicó ayer y la fecha si se publicó anteriormente.
+	 * 
+	 * @param pubDate	fecha de publicación del item.
+	 */
 	public void setPubDate(String pubDate) {
 		DateFormat formatter = new SimpleDateFormat(
 				"EEE, dd MMM yyyy HH:mm:ss zzz", Locale.ENGLISH);
@@ -189,7 +279,7 @@ public class RssItem implements Parcelable {
 				
 			} else if (diffHours<=48 && now.getDay() != date.getDay()) {
 				// ayer
-				this.stringPubDate = "AYER";
+				this.stringPubDate = "AYER"; //TODO: string.xml
 			} else {
 				// fecha
 				this.stringPubDate = new SimpleDateFormat("dd/MMMM/yyyy",	Locale.getDefault()).format(date);
@@ -204,6 +294,12 @@ public class RssItem implements Parcelable {
 		}
 	}
 	
+	/**
+	 * Recuperar cuerpo del item.
+	 * Si no se ha establecido el atributo contentEncoded,
+	 * se devuelve la descripción.
+	 * @return	cuerpo del item.
+	 */
 	public String getContentEncoded() {
 		
 		if (contentEncoded == null) {
@@ -213,26 +309,52 @@ public class RssItem implements Parcelable {
 		return contentEncoded;
 	}
 
+	/**
+	 * Establecer cuerpo del item.
+	 * @param content	cuerpo del item.
+	 */
 	public void setContentEncoded(String content) {
 		this.contentEncoded = content;
 	}
 	
+	/**
+	 * Obtener autor del item.
+	 * @return	autor del item.
+	 */
 	public String getDcCreator() {
 		return DcCreator;
 	}
 
+	/**
+	 * Establecer autor del item.
+	 * @param dcCreator	autor del item.
+	 */
 	public void setDcCreator(String dcCreator) {
 		this.DcCreator = dcCreator;
 	}
 	
+	/**
+	 * Establecer categoría del item.
+	 * @param category	categoría del item.
+	 */
 	public void setCategory (String category) {
 		this.category.add(category);
 	}
 	
+	/**
+	 * Obtener categorías del item.
+	 * @return	lista de categorías del item.
+	 */
 	public ArrayList<String> getCategory () {
 		return category;
 	}
 	
+	/**
+	 * Obtener autor del item.
+	 * Si no se ha establecido el atributo DcCreator,
+	 * se devuelve el atributo author.
+	 * @return	autor del item.
+	 */
 	public String getAuthor() {
 		if (DcCreator != null) {
 			return DcCreator;
@@ -241,6 +363,10 @@ public class RssItem implements Parcelable {
 		return author;
 	}
 
+	/**
+	 * Establecer autor del item.
+	 * @param author	autor del item.
+	 */
 	public void setAuthor(String author) {
 		this.author = author;
 	}

@@ -1,3 +1,11 @@
+/*******************************************************************************
+ * Atryl: RSS news reader for Android Devices - v0.4 - 25/02/2014
+ * https://github.com/manumuve/Atryl
+ *
+ * Copyright (c) 2014 "Manumuve" Manuel E Muñoz <manumuve@gmail.com>
+ * Dual licensed under the MIT and GPL licenses.
+ *
+ ******************************************************************************/
 package com.manumuve.atryl.data;
 
 import java.io.IOException;
@@ -12,15 +20,26 @@ import org.xml.sax.InputSource;
 import org.xml.sax.SAXException;
 import org.xml.sax.XMLReader;
 
-/*
- * Esta clase tendrÃ¡ Ãºnicamente un constructor que reciba como parÃ¡metro
- * la URL del documento a parsear, y un mÃ©todo pÃºblico llamado parse()
- * para ejecutar la lectura del documento, y que devolverÃ¡ como resultado
+
+/**
+ * Esta clase tendrá únicamente un constructor que reciba como parámetro
+ * la URL del documento a parsear, y un método público llamado parse()
+ * para ejecutar la lectura del documento, y que devolverá como resultado
  * una lista de noticias.
+ * @author Manu
+ *
  */
 
 public class RssReader {
 
+	/**
+	 * Recibe una URL y devuelve el objeto RssFeed correspondiente, en caso
+	 * de existir.
+	 * @param url
+	 * @return RssFeed leído en la URL recibida.
+	 * @throws SAXException
+	 * @throws IOException
+	 */
 	public static RssFeed read(URL url) throws SAXException, IOException {
 		
 		// TODO: está bien comprobar esto, pero jamás debería producirse

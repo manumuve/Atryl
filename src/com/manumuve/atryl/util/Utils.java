@@ -1,3 +1,11 @@
+/*******************************************************************************
+ * Atryl: RSS news reader for Android Devices - v0.4 - 25/02/2014
+ * https://github.com/manumuve/Atryl
+ *
+ * Copyright (c) 2014 "Manumuve" Manuel E Muñoz <manumuve@gmail.com>
+ * Dual licensed under the MIT and GPL licenses.
+ *
+ ******************************************************************************/
 package com.manumuve.atryl.util;
 
 import java.io.IOException;
@@ -13,17 +21,25 @@ import android.net.ConnectivityManager;
 import android.net.NetworkInfo;
 import android.util.DisplayMetrics;
 import android.util.Log;
-import android.widget.Toast;
 
-import com.manumuve.atryl.activity.MainActivity;
 import com.manumuve.atryl.data.DataSingleton;
-import com.manumuve.atryl.data.RssCategory;
 
-
+/**
+ * Clase Utils, contiene métodos de utilidad que se invocan en diversos puntos
+ * del resto de la aplicación.
+ * 
+ * @author Manu
+ * 
+ */
 public class Utils {
 	 
 	static DataSingleton dataSingleton = DataSingleton.getInstance();
 
+	/**
+	 * Recibe una cadena de caracteres y devuelve una variable URL
+	 * @param urlString
+	 * @return URL recibida como String
+	 */
 	static public URL stringToURL (String urlString) {
 		
 		try {
@@ -41,9 +57,16 @@ public class Utils {
 
 	}
 	
-	/* Comprobar si existe conexión a Internet.
+	/**
+	 * Comprobar si existe conexión a Internet en el momento de ser invocada.
 	 * Se puede comprobar de qué tipo es la conexión, si existe, mediante:
-	 * info.getType() -> ConnectivityManager.TYPE_MOBILE, ConnectivityManager.TYPE_WIFI, ConnectivityManager.TYPE_WIMAX…
+	 * info.getType()
+	 * 		ConnectivityManager.TYPE_MOBILE
+	 * 		ConnectivityManager.TYPE_WIFI
+	 * 		ConnectivityManager.TYPE_WIMAX
+	 * 		…
+	 * 
+	 * @return true si existe, false si no existe.
 	 */
 	static public boolean checkConnectivity()
     {
@@ -59,8 +82,10 @@ public class Utils {
         return enabled;         
     }
 	
-	/* Comprobar si una URL está online o no
-	 * true o false dependiendo del resultado
+	/** 
+	 * Comprobar si una URL está online en el momento de ser invocada.
+	 * 
+	 * @return true si está online, false si no lo está.
 	 */
 	static public boolean isOnline(URL url) {
 
@@ -74,10 +99,10 @@ public class Utils {
 				return Boolean.valueOf(true);
 			}
 		} catch (MalformedURLException e1) {
-			// TODO Auto-generated catch block
+			// Captura de excepción
 			e1.printStackTrace();
 		} catch (IOException e) {
-			// TODO Auto-generated catch block
+			// Captura de excepción
 			e.printStackTrace();
 		}
 
@@ -85,7 +110,14 @@ public class Utils {
 		
 	}
 	
-	
+	/**
+	 * Método de registro propio. Se utiliza en sustitución del
+	 * método Log de Java.
+	 * Se controla mediante la constante MyConstants.DEBUG (true o false)
+	 * 
+	 * @param mode: modo de registrar el mensaje msg.
+	 * @param msg: mensaje que se registra.
+	 */
 	static public void MyLog (char mode, String msg) {
 		if (MyConstants.DEBUG) {
 			switch (mode) {
@@ -101,15 +133,15 @@ public class Utils {
 	}
 	
 	/**
-	 * Returns true if the current device is a smartphone or a "tabletphone"
-	 * like Samsung Galaxy Note or false if not.
-	 * A Smartphone is "a device with less than TABLET_MIN_DP_WEIGHT" dpi
+	 * Comprueba si el dispositivo es un teléfono o una tableta.
+	 * Se define teléfono como cualquier dispositivo con una densidad de pantalla
+	 * (dpi) menor que MyConstants.TABLET_MIN_DP_WEIGHT
 	 * 
-	 * @return true if the current device is a smartphone or false in other 
-	 * case
 	 * Ref: http://stackoverflow.com/questions/7511330/how-to-detect-a-tablet-device-in-android
+	 * 
+	 * @param act: activity desde la que se invoca.
+	 * @return true si el dispositivo es un teléfono, false si no lo es. 
 	 */
-	
 	public static boolean isSmartphone(Activity act) {
 		DisplayMetrics metrics = new DisplayMetrics();
 		act.getWindowManager().getDefaultDisplay().getMetrics(metrics);
@@ -121,42 +153,10 @@ public class Utils {
 			dpi = (int) (metrics.heightPixels / metrics.density);
 		}
 
-		if (dpi < MyConstants.TABLET_MIN_DP_WEIGHT) return true;
-		else                                        return false;
+		if (dpi < MyConstants.TABLET_MIN_DP_WEIGHT)
+			return true;
+		else
+			return false;
 	}
-
-
-
-	/////////////////////// BASURA ///////////////////////
-	static public void rellenotemporal () {
-		//dataSingleton.categories = new ArrayList<RssCategory>();
-		Toast.makeText(dataSingleton.context, "First run del programa o sin datos", Toast.LENGTH_SHORT).show();
-		RssCategory category = new RssCategory();
-		category.setName("Noticias");
-		category.addFeed("Europa Press", "Agencia Europa Press", Utils.stringToURL("http://www.europapress.es/rss/rss.aspx?ch=94"));
-		category.addFeed("El diario digital de Ávila", "El diario digital de Ávila", Utils.stringToURL("http://avilared.com/rss.xml"));
-		category.addFeed("Tribuna de Ávila", "Tribuna de Ávila > Noticias", Utils.stringToURL("http://www.tribunaavila.com/noticias/rss.rss"));
-		dataSingleton.categories.add(category);
-		
-		category = new RssCategory();
-		category.setName("Tecnología");
-		category.addFeed("Engadget en español", "Engadget en español", Utils.stringToURL("http://feeds.feedburner.com/EngadgetSpanish?format=xml"));
-		category.addFeed("El Androide Libre", "Android blog - Comunidad Web - Aplicaciones, juegos, smartphones: Información", Utils.stringToURL("http://feeds.feedburner.com/elandroidelibre?format=xml"));
-		category.addFeed("ElOtroLado.net", "Consolas, videojuegos, nuevas tecnologías y actualidad internauta - Xbox One PS4 Wii U", Utils.stringToURL("http://www.elotrolado.net/feed/"));
-		dataSingleton.categories.add(category);
-		
-		MainActivity.almacen.setFeedsStruct(dataSingleton.categories);
-		
-	}
-	
-	static public void informaciontemporal () {
-		if (dataSingleton._isLoaded) {
-			Utils.MyLog('d', "dataSingleton cargado con "+dataSingleton.categories.size()+" categorías");
-		} else {
-			Utils.MyLog('d', "dataSingleton no contiene datos");
-		}
-			
-	}
-	
 	
 }

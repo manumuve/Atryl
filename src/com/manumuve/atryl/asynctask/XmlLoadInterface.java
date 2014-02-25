@@ -1,3 +1,11 @@
+/*******************************************************************************
+ * Atryl: RSS news reader for Android Devices - v0.4 - 25/02/2014
+ * https://github.com/manumuve/Atryl
+ *
+ * Copyright (c) 2014 "Manumuve" Manuel E Muñoz <manumuve@gmail.com>
+ * Dual licensed under the MIT and GPL licenses.
+ *
+ ******************************************************************************/
 package com.manumuve.atryl.asynctask;
 
 /**
@@ -15,8 +23,16 @@ public interface XmlLoadInterface
      */
     public void onXmlLoadStart (int category, int feed, int error);
     
+    /**
+     * Llamada cuando se notifica el progreso de la operación.
+     * @param msg Mensaje notificando el progreso
+     */
     public void onXmlLoadProgress (int category, int feed,int error);
     
+    /**
+     * Llamada cuando termina la operación, notifica el final y devuelve el resultado.
+     * @param rssFeed The resulting object from the AsyncTask.
+     */
     public void onXmlLoadComplete(int category, int feed,int error);
     
 }

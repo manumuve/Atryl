@@ -1,3 +1,11 @@
+/*******************************************************************************
+ * Atryl: RSS news reader for Android Devices - v0.4 - 25/02/2014
+ * https://github.com/manumuve/Atryl
+ *
+ * Copyright (c) 2014 "Manumuve" Manuel E Muñoz <manumuve@gmail.com>
+ * Dual licensed under the MIT and GPL licenses.
+ *
+ ******************************************************************************/
 package com.manumuve.atryl.adapter;
 
 import java.util.List;
@@ -21,7 +29,7 @@ import com.manumuve.atryl.data.RssFeed;
  * Los datos se obtienen desde una estructura Singleton, el adaptador
  * es completamente independiente.
  * Se intenta implementar el adaptador EFICIENTEMENTE
- * Concepto por: http://www.jmanzano.es/blog/?p=166
+ * @see http://www.jmanzano.es/blog/?p=166
  */
 public class NavigationDrawerAdapter extends BaseExpandableListAdapter {
 	
@@ -31,12 +39,18 @@ public class NavigationDrawerAdapter extends BaseExpandableListAdapter {
 	/** Keeps reference to avoid future findViewById() */
 	private ElementsViewHolder viewHolder;
 
+	/**
+	 * Constructor estándar.
+	 * @param categories
+	 */
 	public NavigationDrawerAdapter (List<RssCategory> categories) {
 		//super(context, textViewResourceId, elements);
 		dataSingleton = DataSingleton.getInstance();
 	}
 	
-	/* Return a child view. You can load your custom layout here. */
+	/** Devuelve la vista de un hijo
+	 * (un feed).
+	 */
 	@Override
 	public View getChildView(int groupPosition, int childPosition, boolean isLastChild, View convertView, ViewGroup parent) {
 		viewHolder = new ElementsViewHolder();
@@ -68,7 +82,10 @@ public class NavigationDrawerAdapter extends BaseExpandableListAdapter {
 		return convertView;
 	}
 	
-	/* Return a group view. You can load your custom layout here. */
+	/**
+	 * Devuelve la vista de un padre
+	 * (una categoría).
+	 */
     @Override
     public View getGroupView(int groupPosition, boolean isExpanded, View convertView, ViewGroup parent) {
     	viewHolder = new ElementsViewHolder();
@@ -146,7 +163,10 @@ public class NavigationDrawerAdapter extends BaseExpandableListAdapter {
 		return true;
 	}
 	
-	/* Vistas que va a contener cada fila */
+	/**
+	 * Vistas que va a contener cada fila
+	 * @author Manu
+	 */
 	static class ElementsViewHolder {
 		TextView txCategoryName;
 		TextView txFeedTitle;

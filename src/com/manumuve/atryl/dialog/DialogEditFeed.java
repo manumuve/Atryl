@@ -1,3 +1,11 @@
+/*******************************************************************************
+ * Atryl: RSS news reader for Android Devices - v0.4 - 25/02/2014
+ * https://github.com/manumuve/Atryl
+ *
+ * Copyright (c) 2014 "Manumuve" Manuel E Muñoz <manumuve@gmail.com>
+ * Dual licensed under the MIT and GPL licenses.
+ *
+ ******************************************************************************/
 package com.manumuve.atryl.dialog;
 
 import android.app.Activity;
@@ -14,14 +22,19 @@ import android.widget.EditText;
 import com.manumuve.atryl.R;
 import com.manumuve.atryl.data.DataSingleton;
 
-
+/** Clase encargada de la gestión del diálodo "Editar suscripción"
+ * 
+ * @author Manu
+ *
+ */
 public class DialogEditFeed extends DialogFragment {
 
 	
-	/* -------------------------------------------------------
+	/** 
      * Comprobar que la clase que hace la llamada implementa
      * la interfaz necesaria para los eventos callback
-     * -------------------------------------------------------
+     *
+     * @see http://developer.android.com/intl/es/training/basics/fragments/communicating.html
      */
 	// Use this instance of the interface to deliver action events
 	MyDialogInterface mListener;
@@ -40,7 +53,6 @@ public class DialogEditFeed extends DialogFragment {
 					+ " must implement NoticeDialogListener");
 		}
 	}
-    /* -------------------------------------------------------  */
 
 	DataSingleton dataSingleton;
 	EditText etxFeedTitle;
@@ -68,6 +80,9 @@ public class DialogEditFeed extends DialogFragment {
         return f;
     }
     
+    /**
+     * Iniciar las variables necesarias.
+     */
     @Override
     public void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -79,6 +94,11 @@ public class DialogEditFeed extends DialogFragment {
         dataSingleton = DataSingleton.getInstance();
     }
     
+    /**
+     * Método que crea el diálogo "Editar suscripción".
+     * 
+     * @return diálogo creado.
+     */
 	@Override
 	public Dialog onCreateDialog(Bundle savedInstanceState) {
 
@@ -140,22 +160,43 @@ public class DialogEditFeed extends DialogFragment {
 		return builder.create();
 	}
 	
+	/**
+	 * Devuelve la posición de la categoría a la que pertenece
+	 * el feed a editar.
+	 * @return posición de la categoría.
+	 */
 	public int getCategory () {
 		return category;
 	}
 	
+	/**
+	 * Devuelve la posición del feed a editar.
+	 * @return posición del feed a editar.
+	 */
 	public int getFeed () {
 		return feed;
 	}
 	
+	/**
+	 * Devuelve el nuevo nombre del feed que se editar.
+	 * @return nuevo nombre del feed.
+	 */
 	public String getFeedNewTitle () {
 		return feedNewTitle;
 	}
 	
+	/**
+	 * Devuelve la nueva descripción del feed a editar.
+	 * @return nueva descripción del feed.
+	 */
 	public String getFeedNewDescription () {
 		return feedNewDescription;
 	}
 	
+	/**
+	 * Devuelve la confirmación de eliminar el feed.
+	 * @return true si la eliminación está confirmada, false si no lo está.
+	 */
 	public Boolean getDeleteFeed () {
 		return deleteFeed;
 	}

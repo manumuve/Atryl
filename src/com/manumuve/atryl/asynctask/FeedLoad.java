@@ -1,3 +1,11 @@
+/*******************************************************************************
+ * Atryl: RSS news reader for Android Devices - v0.4 - 25/02/2014
+ * https://github.com/manumuve/Atryl
+ *
+ * Copyright (c) 2014 "Manumuve" Manuel E Muñoz <manumuve@gmail.com>
+ * Dual licensed under the MIT and GPL licenses.
+ *
+ ******************************************************************************/
 package com.manumuve.atryl.asynctask;
 
 import java.io.IOException;
@@ -28,10 +36,9 @@ import com.manumuve.atryl.data.RssReader;
  */
 public class FeedLoad extends AsyncTask<URL, Void, RssFeed> /* Params, Progress, Result */ {
 
-	/* -------------------------------------------------------
+	/** 
      * Comprobar que la clase que hace la llamada implementa
      * la interfaz necesaria para los eventos callback
-     * -------------------------------------------------------
      */
 	// Use this instance of the interface to deliver action events
 	FeedLoadInterface mListener;
@@ -59,8 +66,11 @@ public class FeedLoad extends AsyncTask<URL, Void, RssFeed> /* Params, Progress,
 	URL url;
 	
 
-	/* Constructor público que toma los argumentos con los que trabajar
-	 * Llamada desde Activity
+	/**
+	 * Constructor público que toma los argumentos con los que trabajar.
+	 * Llamada desde Activity.
+	 * @param act	activity que llama.
+	 * @param url	url del feed.
 	 */
 	public FeedLoad (Activity act, URL url) {
 		caller = act;
@@ -68,8 +78,11 @@ public class FeedLoad extends AsyncTask<URL, Void, RssFeed> /* Params, Progress,
 		rssFeed = new RssFeed();
 	}
 	
-	/* Constructor público que toma los argumentos con los que trabajar
+	/**
+	 * Constructor público que toma los argumentos con los que trabajar
 	 * Llamada desde Fragment
+	 * @param frg	fragment que llama.
+	 * @param url	url del feed.
 	 */
 	public FeedLoad (Fragment frg, URL url) {
 		caller = frg;
@@ -77,8 +90,11 @@ public class FeedLoad extends AsyncTask<URL, Void, RssFeed> /* Params, Progress,
 		rssFeed = new RssFeed();
 	}
 	
-	/* Constructor público que toma los argumentos con los que trabajar
+	/**
+	 * Constructor público que toma los argumentos con los que trabajar
 	 * Llamada desde DialogFragment
+	 * @param frg	dialog que llama.
+	 * @param url	url del feed.
 	 */
 	public FeedLoad (DialogFragment dlg, URL url) {
 		caller = dlg;
@@ -86,6 +102,10 @@ public class FeedLoad extends AsyncTask<URL, Void, RssFeed> /* Params, Progress,
 		rssFeed = new RssFeed();
 	}
 
+	/**
+	 * Tarea asíncrona en hilo aparte.
+	 * Se carga el contenido del feed desde Internet.
+	 */
 	@Override
 	protected RssFeed doInBackground (URL... url) {
 
@@ -107,6 +127,10 @@ public class FeedLoad extends AsyncTask<URL, Void, RssFeed> /* Params, Progress,
 
 	}
 
+	/**
+	 * Fin de tarea asíncrona.
+	 * Notifica el final de la operación y devuelve el feed obtenido.
+	 */
 	@Override
 	protected void onPostExecute (RssFeed result) {
 		mListener.onFeedLoadComplete(result);

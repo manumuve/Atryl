@@ -1,3 +1,11 @@
+/*******************************************************************************
+ * Atryl: RSS news reader for Android Devices - v0.4 - 25/02/2014
+ * https://github.com/manumuve/Atryl
+ *
+ * Copyright (c) 2014 "Manumuve" Manuel E Muñoz <manumuve@gmail.com>
+ * Dual licensed under the MIT and GPL licenses.
+ *
+ ******************************************************************************/
 package com.manumuve.atryl.adapter;
 
 import java.util.List;
@@ -12,8 +20,13 @@ import android.widget.TextView;
 import com.manumuve.atryl.R;
 import com.manumuve.atryl.data.RssItem;
 
-
-
+/**
+ * Adapter class para rellenar una lista de noticias.
+ * Los datos se obtienen desde una estructura Singleton, el adaptador
+ * es completamente independiente.
+ * Se intenta implementar el adaptador EFICIENTEMENTE
+ * @see http://www.jmanzano.es/blog/?p=166
+ */
 public class FeedItemListAdapter extends BaseAdapter {
 
 	private Context context;
@@ -39,6 +52,10 @@ public class FeedItemListAdapter extends BaseAdapter {
         return position;
     }
 
+    /**
+     * Método para rellenar una vista con datos y devolverla como
+     * elemento de una lista.
+     */
 	@Override
 	public View getView(int position, View convertView, ViewGroup parent) {
 		// Create a new view into the list.

@@ -1,3 +1,11 @@
+/*******************************************************************************
+ * Atryl: RSS news reader for Android Devices - v0.4 - 25/02/2014
+ * https://github.com/manumuve/Atryl
+ *
+ * Copyright (c) 2014 "Manumuve" Manuel E Muñoz <manumuve@gmail.com>
+ * Dual licensed under the MIT and GPL licenses.
+ *
+ ******************************************************************************/
 package com.manumuve.atryl.activity;
 
 import android.content.Intent;
@@ -22,6 +30,11 @@ import com.manumuve.atryl.data.RssItem;
 import com.manumuve.atryl.fragment.FragmentFeedItem;
 import com.manumuve.atryl.util.MyConstants;
 
+/** Actividad de consulta de noticia de la aplicación
+* Construye la pantalla de consulta de noticia que gestiona
+* el un fragment de la clase FragmentFeedItem.
+* @author Manumuve
+*/
 public class FeedItemActivity extends ActionBarActivity { // ActionBarActivity hereda de FragmentActivity
 	
 	/* Elemento estático para poder establecerlo y recuperarlo desde
@@ -80,7 +93,9 @@ public class FeedItemActivity extends ActionBarActivity { // ActionBarActivity h
 		}
 	}
 	
-	
+	/**
+	 * Construye el menú de la aplicación.
+	 */
 	@Override
 	public boolean onCreateOptionsMenu(Menu menu) {
 	    getMenuInflater().inflate(R.menu.menu_feed_item_activity, menu);
@@ -95,37 +110,41 @@ public class FeedItemActivity extends ActionBarActivity { // ActionBarActivity h
 	}
 	
 	 /**
-	   * Defines a default (dummy) share intent to initialize the action provider.
-	   * However, as soon as the actual content to be used in the intent
-	   * is known or changes, you must update the share intent by again calling
-	   * mShareActionProvider.setShareIntent()
-	   */
-	  private Intent getDefaultIntent() {
-		  if (rssItem != null) {
-			  final Intent intent = new Intent(Intent.ACTION_SEND);
-			  intent.setType("text/plain");
-			  intent.putExtra(Intent.EXTRA_TITLE, rssItem.getTitle());
-			  // title y subject se duplica en algunas apps
-			  //intent.putExtra(Intent.EXTRA_SUBJECT, rssItem.getTitle());
+	  * Define un share intent por defecto para inicializar el action provider.
+	  * Los datos con los que se carga el intent, son los que la
+	  * aplicación compartirá con otras aplicaciones.
+	  * 
+	  * @return el intent con los datos que se comparten.
+	  */
+	private Intent getDefaultIntent() {
+		if (rssItem != null) {
+			final Intent intent = new Intent(Intent.ACTION_SEND);
+			intent.setType("text/plain");
+			intent.putExtra(Intent.EXTRA_TITLE, rssItem.getTitle());
+			// title y subject se duplica en algunas apps
+			//intent.putExtra(Intent.EXTRA_SUBJECT, rssItem.getTitle());
 
-			  // Share app's name, if enabled in preferences
-			  SharedPreferences sharedPref = PreferenceManager.getDefaultSharedPreferences(this);
-			  intent.putExtra(Intent.EXTRA_TEXT,
-					  rssItem.getTitle()
-					  + ": "
-					  + rssItem.getLink()
-					  + (sharedPref.getBoolean("preference_IncludeAppName", true) ?
-							  (" " + getResources().getString(R.string.share_app_reference)) : "")
-					  );
+			// Share app's name, if enabled in preferences
+			SharedPreferences sharedPref = PreferenceManager.getDefaultSharedPreferences(this);
+			intent.putExtra(Intent.EXTRA_TEXT,
+					"\""
+					+ rssItem.getTitle()
+					+ ": "
+					+ rssItem.getLink()
+					+ (sharedPref.getBoolean("preference_IncludeAppName", true) ?
+							(" " + getResources().getString(R.string.share_app_reference)) : "")
+					+ "\"");
 
-			  return intent;
-		  } else {
-			  return null;
-		  }
-		  
-	  }
+			return intent;
+		} else {
+			return null;
+		}
 
-	/* Called whenever we call invalidateOptionsMenu() */
+	}
+
+	/**
+	 * Método invocado con cada llamada a invalidateOptionsMenu().
+	 */
 	@Override
 	public boolean onPrepareOptionsMenu(Menu menu) {
 		// If the nav drawer is open, hide action items related to the content view
@@ -134,6 +153,11 @@ public class FeedItemActivity extends ActionBarActivity { // ActionBarActivity h
 		return super.onPrepareOptionsMenu(menu);
 	}
 	
+	/**
+	 * Método incovado cada vez que se selecciona una opción del menú.
+	 * 
+	 * @return	true si se ha procesado la selección, false si no.
+	 */
 	@Override
 	public boolean onOptionsItemSelected(MenuItem item) {
 
@@ -185,6 +209,9 @@ public class FeedItemActivity extends ActionBarActivity { // ActionBarActivity h
 
 	}
 	
+	/**
+	 * Método invocado con cada cambio de orientación de la pantalla.
+	 */
 	@Override
 	public void onConfigurationChanged(Configuration newConfig) {
 	    super.onConfigurationChanged(newConfig);
@@ -196,10 +223,13 @@ public class FeedItemActivity extends ActionBarActivity { // ActionBarActivity h
 	  }
 	
 
+	/**
+	 * Establece el título de la barra de acción.
+	 */
 	@Override
 	public void setTitle(CharSequence title) {
-//		mTitle = title;
-//		getActionBar().setTitle(mTitle);
+		//mTitle = title;
+		//getActionBar().setTitle(mTitle);
 	}
 
 	
@@ -244,10 +274,18 @@ public class FeedItemActivity extends ActionBarActivity { // ActionBarActivity h
         EasyTracker.getInstance(this).activityStop(this);  // Add this method.
 	}
 
+	/**
+	 * Setter para el RssItem que se va a mostrar.
+	 * @param item item a mostrar.
+	 */
 	public static void setRssItem(RssItem item) {
 		rssItem = item;
 	}
 
+	/**
+	 * Getter para el RssItem que se está mostrando.
+	 * @return item que se está mostrando.
+	 */
 	public static RssItem getRssItem() {
 		return rssItem;
 	}

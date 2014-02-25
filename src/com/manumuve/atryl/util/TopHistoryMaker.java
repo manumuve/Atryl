@@ -1,22 +1,31 @@
+/*******************************************************************************
+ * Atryl: RSS news reader for Android Devices - v0.4 - 25/02/2014
+ * https://github.com/manumuve/Atryl
+ *
+ * Copyright (c) 2014 "Manumuve" Manuel E Muñoz <manumuve@gmail.com>
+ * Dual licensed under the MIT and GPL licenses.
+ *
+ ******************************************************************************/
 package com.manumuve.atryl.util;
 
 import java.text.DateFormat;
 import java.text.ParseException;
 import java.text.SimpleDateFormat;
 import java.util.ArrayList;
-import java.util.Collection;
-import java.util.Collections;
 import java.util.Date;
 import java.util.HashMap;
-import java.util.Iterator;
 import java.util.Locale;
-import java.util.Map.Entry;
 
 import android.util.Log;
 
 import com.manumuve.atryl.data.DataSingleton;
 import com.manumuve.atryl.data.RssItem;
 
+/**
+ * Clase del algoritmo encargado de generar la lista de noticias relevantes.
+ * @author Manumuve
+ * @version 0.2
+ */
 public class TopHistoryMaker {
 
 	private static DataSingleton dataSingleton;
@@ -31,9 +40,13 @@ public class TopHistoryMaker {
 	private StringBuilder todosLosTitulos;
 	private ArrayList<String> keyWords;
 	
-	/** Máx horas para ser considerado item destacado */
-	private static final int MAX_MINUTES_AGE = 60*24;
+	/** Constantes para variar el algoritmo de relevantes */
+	private static final int MAX_MINUTES_AGE = 60*24; // 24 horas
+	private static final int MIN_KEYWORD_FREQUENCY = 4; // 3 repeticiones
 	
+	/**
+	 * Constructor de clase. Inicializa las variables necesarias.
+	 */
 	public TopHistoryMaker () {
 		dataSingleton = DataSingleton.getInstance();
 		stories = new ArrayList<RssItem>();
@@ -42,12 +55,19 @@ public class TopHistoryMaker {
 		keyWords = new ArrayList<String>();
 	}
 	
-	/** Algoritmo que construye la lista de noticias
-	 * relevantes
+	/**
+	 * Algoritmo que construye la lista de noticias relevantes. Resumen de
+	 * funcionamiento:
+	 * 1) Construir una lista con las noticias publicadas hace menos de
+	 *    MAX_MINUTES_AGE
+	 * 2) Construir una lista con las palabras que se repiten al menos
+	 *    MIN_KEYWORD_FREQUENCY veces en los títulos de las noticias
+	 *    obtenidas en el paso anterior
+	 * 3) Construir una lista con las noticias en cuyo título aparece una
+	 *    de las palabras de la lista construida en el paso anterior.
+	 * 4) Devolver la última lista construida.
 	 * 
-	 * @return
-	 * 	ArrayList<RssItem> topStories
-	 * 	null if error
+	 * @return ArrayList<RssItem> topStories (error = null)
 	 */
 	public ArrayList<RssItem> buildList () {
 		
@@ -63,13 +83,12 @@ public class TopHistoryMaker {
 						datePubDate = rssItem.getDatePubDate();
 						
 						if (datePubDate == null) {
-							/* Check time limit */
 							try {
 								stringPubDate = rssItem.getPubDate();
 								DateFormat formatter = new SimpleDateFormat(MyConstants.DATE_FORMAT, Locale.ENGLISH);
 								datePubDate = formatter.parse(stringPubDate); // Posible excepción
 							} catch (ParseException e) {
-								// TODO Auto-generated catch block
+								// Captura de excepción
 								e.printStackTrace();
 								continue; // Descartar item actual y pasar a siguiente
 							}
@@ -78,9 +97,9 @@ public class TopHistoryMaker {
 						diffMSec = new Date().getTime() - datePubDate.getTime();
 						diffMinutes = (int) (diffMSec / (1000*60));
 						
+						// Descartar por edad
 						if (diffMinutes < MAX_MINUTES_AGE) {
 							stories.add(rssItem);
-							//todosLosTitulos = todosLosTitulos + rssItem.getTitle().replaceAll("\\b\\w{1,4}\\s?\\b", "") + " ";
 							todosLosTitulos
 								.append(rssItem.getTitle())
 								.append(" ");
@@ -110,133 +129,34 @@ public class TopHistoryMaker {
 		return topStories;
 	}
 	
-	
-	private void findKeyWords (String input) {
+	/**
+	 * Método que elabora la lista de palabras clave.
+	 * Una palabra clave es una palabra que se repite
+	 * más de MIN_KEYWORD_FREQUENCY veces 
+	 * @param input
+	 */
+	private void findKeyWords(String input) {
 
-			input = input.replaceAll("[^0-9a-zA-Z\\s]+", "");   // borrar caracteres especiales
-			input = input.replaceAll("\\b\\w{1,4}\\s?\\b", ""); // borrar menos de 4 caracteres
-			String[] words = input.toLowerCase().split("\\s+");
-			HashMap<String, Integer> wordCounts = new HashMap<String, Integer>();
-			
-			for (String word : words) {
-			    Integer count = wordCounts.get(word);
-			    if (count == null) {
-			        count = 0;
-			    }
-			    
-			    if (count > 3) { // relevante detectada
-			    	if (keyWords.contains(word) == false) {
-			    		keyWords.add(word);
-				    	Log.d("Atryl", "Relevante: " + word);
-			    	}
-			    	continue;
-			    }
-			    
-			    wordCounts.put(word, count + 1);
+		input = input.replaceAll("[^0-9a-zA-Z\\s]+", ""); // borrar caracteres especiales
+		input = input.replaceAll("\\b\\w{1,4}\\s?\\b", ""); // borrar menos de 4 caracteres
+		String[] words = input.toLowerCase().split("\\s+");
+		HashMap<String, Integer> wordCounts = new HashMap<String, Integer>();
+
+		for (String word : words) {
+			Integer count = wordCounts.get(word);
+			if (count == null) {
+				count = 0;
 			}
-			
-			//Log.d("Atryl", "Count: " + wordCounts);
-						
-//			Collection<Integer> c = wordCounts.values();
-//			for (int i=0; i<5; i++) {
-//				for (int j=0; j<wordCounts.size(); j++) {
-//					
-//				}
-//			}
-//			
-//			Iterator<Entry<String, Integer>> iter = wordCounts.entrySet().iterator();
-//			while (iter.hasNext()) {
-//			    Entry<String, Integer> entry = iter.next();
-//			    if (entry.getValue().equals(Collections.max(c))) {
-//			        String key_you_look_for = entry.getKey();
-//			        Log.d("Atryl", "Máx: " + key_you_look_for + " " + Collections.max(c).toString());
-//			    }
-//			}
-			
-			
 
+			if (count >= MIN_KEYWORD_FREQUENCY) { // relevante detectada
+				if (keyWords.contains(word) == false) {
+					keyWords.add(word);
+					Log.d("Atryl", "Relevante: " + word);
+				}
+				continue;
+			}
+
+			wordCounts.put(word, count + 1);
+		}
 	}
 }
-	
-	
-//	private void funcion (String input) {
-//		String[] split = input.split(" ");
-//		Map<String, Integer> counts = new HashMap<String,Integer>(split.length*(split.length-1)/2,1.0f);
-//		int idx0 = 0;
-//		for(int i=0; i<split.length-1; i++){
-//			int splitIpos = input.indexOf(split[i],idx0);
-//			int newPhraseLen = splitIpos-idx0+split[i].length();
-//			String phrase = input.substring(idx0, idx0+newPhraseLen);
-//			for(int j=i+1; j<split.length; j++){
-//				newPhraseLen = phrase.length()+split[j].length()+1;
-//				phrase=input.substring(idx0, idx0+newPhraseLen);
-//				Integer count = counts.get(phrase);
-//				if(count==null){
-//					counts.put(phrase, 1);
-//				} else {
-//					counts.put(phrase, count+1);
-//				}
-//			}
-//			idx0 = splitIpos+split[i].length()+1;
-//		}
-//
-//		Map.Entry<String, Integer>[] entries = counts.entrySet().toArray(new Map.Entry[0]);
-//		Arrays.sort(entries, new Comparator<Map.Entry<String, Integer>>() {
-//			@Override
-//			public int compare(Map.Entry<String, Integer> o1, Map.Entry<String, Integer> o2) {
-//				return o2.getValue().compareTo(o1.getValue());
-//			}
-//		});
-//		int rank=1;
-//		Log.d ("ATRYL", "Rank Freq Phrase");
-//		for(Map.Entry<String,Integer> entry:entries){
-//			int count = entry.getValue();
-//			if(count>1){
-//				Log.d ("ATRYL", rank++ + " " + count + " " + entry.getKey());
-//				
-//			}
-//		}
-//	}
-	
-	
-//	public class CountPhrases {
-//	    public void main(String[] arg){
-//	        String input = "my name is john jane doe jane doe doe my name is jane doe doe my jane doe name is jane doe I go by the name of john joe jane doe is my name";
-//
-//	        String[] split = input.split(" ");
-//	        Map<String, Integer> counts = new HashMap<String,Integer>(split.length*(split.length-1)/2,1.0f);
-//	        int idx0 = 0;
-//	        for(int i=0; i<split.length-1; i++){
-//	            int splitIpos = input.indexOf(split[i],idx0);
-//	            int newPhraseLen = splitIpos-idx0+split[i].length();
-//	            String phrase = input.substring(idx0, idx0+newPhraseLen);
-//	            for(int j=i+1; j<split.length; j++){
-//	                newPhraseLen = phrase.length()+split[j].length()+1;
-//	                phrase=input.substring(idx0, idx0+newPhraseLen);
-//	                Integer count = counts.get(phrase);
-//	                if(count==null){
-//	                     counts.put(phrase, 1);
-//	                } else {
-//	                     counts.put(phrase, count+1);
-//	                }
-//	            }
-//	            idx0 = splitIpos+split[i].length()+1;
-//	        }
-//
-//	        Map.Entry<String, Integer>[] entries = counts.entrySet().toArray(new Map.Entry[0]);
-//	        Arrays.sort(entries, new Comparator<Map.Entry<String, Integer>>() {
-//	            @Override
-//	            public int compare(Map.Entry<String, Integer> o1, Map.Entry<String, Integer> o2) {
-//	                return o2.getValue().compareTo(o1.getValue());
-//	            }
-//	        });
-//	        int rank=1;
-//	        System.out.println("Rank Freq Phrase");
-//	        for(Map.Entry<String,Integer> entry:entries){
-//	            int count = entry.getValue();
-//	            if(count>1){
-//	                System.out.printf("%4d %4d %s\n", rank++, count,entry.getKey());
-//	            }
-//	        }
-//	    }
-//	}

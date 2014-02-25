@@ -1,3 +1,11 @@
+/*******************************************************************************
+ * Atryl: RSS news reader for Android Devices - v0.4 - 25/02/2014
+ * https://github.com/manumuve/Atryl
+ *
+ * Copyright (c) 2014 "Manumuve" Manuel E Muñoz <manumuve@gmail.com>
+ * Dual licensed under the MIT and GPL licenses.
+ *
+ ******************************************************************************/
 package com.manumuve.atryl.dialog;
 
 import android.app.Activity;
@@ -13,14 +21,19 @@ import android.widget.EditText;
 import com.manumuve.atryl.R;
 import com.manumuve.atryl.data.DataSingleton;
 
-
+/** Clase encargada de la gestión del diálodo "Editar categoría"
+ * 
+ * @author Manu
+ *
+ */
 public class DialogEditCategory extends DialogFragment {
 
 	
-	/* -------------------------------------------------------
+	/** 
      * Comprobar que la clase que hace la llamada implementa
      * la interfaz necesaria para los eventos callback
-     * -------------------------------------------------------
+     *
+     * @see http://developer.android.com/intl/es/training/basics/fragments/communicating.html
      */
 	// Use this instance of the interface to deliver action events
 	MyDialogInterface mListener;
@@ -39,12 +52,13 @@ public class DialogEditCategory extends DialogFragment {
 					+ " must implement NoticeDialogListener");
 		}
 	}
-    /* -------------------------------------------------------  */
 
-	DataSingleton dataSingleton;
-	EditText etxCategoryName;
-	int category;
-	String categoryNewName;
+	private DataSingleton dataSingleton;
+	private EditText etxCategoryName;
+	
+	/** Variables de gestión de categoría */
+	private int category;
+	private String categoryNewName;
 
     /**
      * Create a new instance of DialogEditCategory, providing "cat"
@@ -61,6 +75,9 @@ public class DialogEditCategory extends DialogFragment {
         return f;
     }
     
+    /**
+     * Iniciar las variables necesarias.
+     */
     @Override
     public void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -69,7 +86,11 @@ public class DialogEditCategory extends DialogFragment {
         dataSingleton = DataSingleton.getInstance();
     }
     
-
+    /**
+     * Método que crea el diálogo "Editar categoría".
+     * 
+     * @return diálogo creado.
+     */
 	@Override
 	public Dialog onCreateDialog(Bundle savedInstanceState) {
 
@@ -109,10 +130,18 @@ public class DialogEditCategory extends DialogFragment {
 		return builder.create();
 	}
 	
+	/**
+	 * Devuelve la posición de la categoría a editar.
+	 * @return posición de la categoría a editar.
+	 */
 	public int getCategory () {
 		return category;
 	}
 	
+	/**
+	 * Devuelve el nuevo nombre de la categoría a editar.
+	 * @return nuevo nombre de categoría.
+	 */
 	public String getCategoryNewName () {
 		return categoryNewName;
 	}

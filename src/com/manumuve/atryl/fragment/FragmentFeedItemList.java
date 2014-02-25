@@ -1,7 +1,11 @@
-/**
- * http://developer.android.com/guide/components/fragments.html
- */
-
+/*******************************************************************************
+ * Atryl: RSS news reader for Android Devices - v0.4 - 25/02/2014
+ * https://github.com/manumuve/Atryl
+ *
+ * Copyright (c) 2014 "Manumuve" Manuel E Muñoz <manumuve@gmail.com>
+ * Dual licensed under the MIT and GPL licenses.
+ *
+ ******************************************************************************/
 package com.manumuve.atryl.fragment;
 
 import java.util.ArrayList;
@@ -29,17 +33,29 @@ import com.manumuve.atryl.data.RssItem;
 import com.manumuve.atryl.util.MyConstants;
 import com.manumuve.atryl.util.Utils;
 
-
+/**
+ * Clase encargada de gestionar la porción de pantalla donde se muestra
+ * la lista de noticias.
+ * @author Manu
+ *
+ */
 public class FragmentFeedItemList extends Fragment {
 
 	private DataSingleton dataSingleton=DataSingleton.getInstance();
 	private ListView listView;
 
-	
+	/**
+	 * Constructor estándar.
+	 */
 	public FragmentFeedItemList() {
 		// Empty constructor required for fragment subclasses
 	}
 	
+	/**
+	 * Se comprueba que la actividad contenedora implementa la 
+	 * interfaz OnFeedItemListSelectedListener, necesaria para
+	 * gestionar las pulsaciones sobre la lista de noticias.
+	 */
     @Override
     public void onAttach(Activity activity) {
         super.onAttach(activity);
@@ -64,6 +80,9 @@ public class FragmentFeedItemList extends Fragment {
 		
 	}
 	
+	/**
+	 * Devuelve la vista que se va a utilizar. 
+	 */
 	@Override
 	public View onCreateView(LayoutInflater inflater, ViewGroup container, Bundle savedInstanceState) {
 		//Utils.MyLog('d', "FragmentFeedItemList onCreateView");
@@ -72,6 +91,12 @@ public class FragmentFeedItemList extends Fragment {
 		
 	}
 	
+	/**
+	 * Enlaza los componentes de la vista con variables del método
+	 * y establece los listeners para enviar las pulsaciones sobre la
+	 * lista a la actividad contenedora, mediante la interfaz
+	 * OnFeedItemListSelectedListener.
+	 */
 	@Override
 	public void onActivityCreated(Bundle state) {
 		super.onActivityCreated(state);
@@ -176,7 +201,10 @@ public class FragmentFeedItemList extends Fragment {
 
 	/* FRAGMENT IS DESTROYED */
 
-
+	/**
+	 * Muestra la lista de noticias que recibe como parámetro.
+	 * @param list	lista de noticias a mostrar.
+	 */
     public void mostrarLista(ArrayList<RssItem> list) {
     	
     	listView.setAdapter(new FeedItemListAdapter(dataSingleton.context, list));
@@ -184,12 +212,19 @@ public class FragmentFeedItemList extends Fragment {
     }
     
     
-    /* COMUNICACION CON ACTIVIDAD CONTENEDORA
-     * http://developer.android.com/training/basics/fragments/communicating.html
+    /**
+     * COMUNICACION CON ACTIVIDAD CONTENEDORA
+     * @see http://developer.android.com/training/basics/fragments/communicating.html
      */
     OnFeedItemListSelectedListener mCallback;
 
-    // Container Activity must implement this interface
+    /**
+     * Interfaz para gestionar las pulsaciones en los elementos de la lista
+     * de noticias.
+     * Container Activity must implement this interface
+     * @author Manu
+     *
+     */
     public interface OnFeedItemListSelectedListener {
         public void onFeedItemListSelected(RssItem rssItem);
     }

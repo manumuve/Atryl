@@ -1,3 +1,11 @@
+/*******************************************************************************
+ * Atryl: RSS news reader for Android Devices - v0.4 - 25/02/2014
+ * https://github.com/manumuve/Atryl
+ *
+ * Copyright (c) 2014 "Manumuve" Manuel E Muñoz <manumuve@gmail.com>
+ * Dual licensed under the MIT and GPL licenses.
+ *
+ ******************************************************************************/
 package com.manumuve.atryl.data;
 
 import java.lang.reflect.InvocationTargetException;
@@ -19,6 +27,14 @@ import com.google.analytics.tracking.android.MapBuilder;
 import com.manumuve.atryl.util.MyConstants;
 import com.manumuve.atryl.util.Utils;
 
+/**
+ * Manejador RSS.
+ * Lee el contenido de un canal RSS contenido en un documento XML
+ * y genera el objeto RssFeed correspondiente con todos sus RssItem.
+ * @author Manu
+ *
+ */
+
 public class RssHandler extends DefaultHandler {
 	private RssFeed rssFeed;
 	private RssItem rssItem;
@@ -29,6 +45,10 @@ public class RssHandler extends DefaultHandler {
 	private EasyTracker myTracker = EasyTracker.getInstance(context);
 	private ArrayList<String> xmlParseExceptions = new ArrayList<String>();
 
+	/**
+	 * Método de inicio de documento.
+	 * Inicializa las variables a utilizar.
+	 */
 	@Override
 	public void startDocument() throws SAXException {
 
@@ -40,16 +60,26 @@ public class RssHandler extends DefaultHandler {
 		
 	}
 
+	/**
+	 * Método de inicio de elemento.
+	 * Crea un nuevo RssItem y lo añade al RssFeed
+	 * que se está procesando.
+	 */
 	@Override
 	public void startElement (String uri, String localName, String qName, Attributes attributes) {
 		stringBuilder = new StringBuilder();
 		if(qName.equals("item") && rssFeed != null) {
 			rssItem = new RssItem();
-//			rssItem.setFeed(rssFeed);
+			//rssItem.setFeed(rssFeed);
 			rssFeed.addItem(rssItem);
 		}
 	}
 	
+	/**
+	 * Método de contenido de elemento.
+	 * Almacena el contenido del elemento que se
+	 * está analizando.
+	 */
 	@Override
 	public void characters (char[] ch, int start, int length) {
 
@@ -58,8 +88,12 @@ public class RssHandler extends DefaultHandler {
 	}
 	
 	/**
-	 * Generar nombre del método dinámicamente. Concepto:
-	 * https://github.com/matshofman/Android-RSS-Reader-Library
+	 * Método de final de elemento.
+	 * Realiza llamadas a los setters de RssFeed y RssItem
+	 * para establecer los valores de los atributos leídos.
+	 * Genera nombre del método dinámicamente.
+	 * Concepto:
+	 * @see	https://github.com/matshofman/Android-RSS-Reader-Library
 	 */
 	@SuppressLint("DefaultLocale")
 	@Override
@@ -114,7 +148,7 @@ public class RssHandler extends DefaultHandler {
 	}
 	
 	/**
-	 * Return the parsed RssFeed with it's RssItems
+	 * Devuelve el RssFeed obtenido con sus RssItems
 	 * @return
 	 */
 	public RssFeed getResult() {
@@ -125,7 +159,14 @@ public class RssHandler extends DefaultHandler {
 			return null;
 		}
 	}
-	
+	/**
+	 * Método para limpiar una cadena de caracteres de los
+	 * caracteres especiales que no nos interesan.
+	 * Necesaria para que el método endElement funcione
+	 * correctamente.
+	 * @param qName: cadena de caracteres a limpiar
+	 * @return cleanQName: cadena de caracteres limpia
+	 */
 	private String qNameCleaner (String qName) {
 		int i;
 		String cleanQName = qName;
@@ -153,7 +194,7 @@ public class RssHandler extends DefaultHandler {
 		
 	}
 	
-	/** Event Tracking using the Google Analytics SDK for Android v2
+	/** Event Tracking utilizando Google Analytics SDK for Android v2
 	 * @param String event: evento a registrar
 	 */
 	private void trackEvent (String event) {
@@ -174,7 +215,8 @@ public class RssHandler extends DefaultHandler {
 		// Statistics and tracking, if enabled in preferences
 		SharedPreferences sharedPref = PreferenceManager.getDefaultSharedPreferences(context);
 		if (sharedPref.getBoolean("preference_SendAnonStats", true) == true) {
-			/*
+			/**
+			 * Formato del evento:
 			 *  String Category
 			 *  String Action
 			 *  String Label
