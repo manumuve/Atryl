@@ -1,12 +1,16 @@
 Atryl
 =====
 
-<img alt="Download from Google Play" align="right" height="300"
-   src="https://github.com/manumuve/Atryl/raw/master/screenshots/screenshot02.png" />
-<img alt="Download from Google Play" align="right" height="300"
-   src="https://github.com/manumuve/Atryl/raw/master/screenshots/screenshot01.png" />
-   
 *RSS news reader for Android devices.*
+
+<div>
+<p>
+<img alt="Download from Google Play" align="center" height="300"
+   src="https://github.com/manumuve/Atryl/raw/master/screenshots/screenshot02.png" />
+<img alt="Download from Google Play" align="center" height="300"
+   src="https://github.com/manumuve/Atryl/raw/master/screenshots/screenshot01.png" />
+</p>
+</div>
 
 <div>
 <p>
